@@ -14,7 +14,7 @@
       --pattern-url-light:none;
       --pattern-url-dark:none;
       /* Halftone texture (right side of cards) */
-      --tex-url:url('assets/texture-halftone-inv.png');
+      --tex-url:url('texture-halftone-inv.png');
       --tex-color:#000000;        /* tint for light cards */
       --tex-color-d:#ffffff;      /* tint for dark cards (auto-inverted) */
       --tex-blend:multiply;       /* blend for light cards */
@@ -269,7 +269,7 @@
       content:'';
       position:absolute; top:0; right:0; bottom:0;
       width:65%;
-      background-image:url('assets/texture-halftone-inv.png');
+      background-image:url('texture-halftone-inv.png');
       background-size:cover;
       background-position:right center;
       background-repeat:no-repeat;
@@ -284,7 +284,7 @@
       content:'';
       position:absolute; top:0; right:0; bottom:0;
       width:65%;
-      background-image:url('assets/texture-halftone-inv.png');
+      background-image:url('texture-halftone-inv.png');
       background-size:cover;
       background-position:right center;
       background-repeat:no-repeat;
@@ -678,10 +678,10 @@
   <!-- TOPBAR -->
   <header class="topbar">
     <a class="topbar-logo" href="#" data-go="welcome">
-      <img src="assets/sagest-logo.png" alt="SAGEST" />
+      <img src="sagest-logo.png" alt="SAGEST" />
     </a>
     <span class="topbar-divider"></span>
-    <span class="topbar-title" id="topbar-context">Sistema de Apredizaje </span>
+    <span class="topbar-title" id="topbar-context">Sistema de Apredizaje </span>
     <div class="topbar-right">
       <span class="topbar-chip">
         <span class="topbar-chip-dot"></span>
@@ -742,7 +742,7 @@
       </button>
 
       <p class="welcome-disclaimer" style="font-family: system-ui">Este diagnóstico es parte de una investigación académica de la Maestría en Gestión del Talento Humano — Universidad ICESI.</p>
-      <p class="welcome-disclaimer" style="font-family: system-ui; margin-top: 10px">Developed by  F I X O R I A • Todos los derechos reservados ©</p>
+      <p class="welcome-disclaimer" style="font-family: system-ui; margin-top: 10px">Developed by  F I X O R I A • Todos los derechos reservados ©</p>
     </div>
   </section>
 
@@ -1069,8 +1069,7 @@
           break;
       }
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${inner}</svg>`;
-      return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
-    }
+      return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;    }
 
     function applyPattern(){
       const root = document.documentElement;
