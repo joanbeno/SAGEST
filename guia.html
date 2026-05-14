@@ -212,7 +212,7 @@
 
   
 
-  <img id="welcome-bg-logo" src="logo_sagest_no_texto.jpeg" alt="" aria-hidden="true" />
+  <img id="welcome-bg-logo" src="logo_sagest_no_texto.jpeg" alt="" aria-hidden="true" style="position:fixed;left:-3%;top:50%;transform:translateY(-50%);height:88vh;width:auto;opacity:0;pointer-events:none;z-index:-1;user-select:none;transition:opacity .6s ease;display:none" />
 
   <!-- DEMO BANNER -->
   <div class="demo-banner">
@@ -279,6 +279,10 @@
           <div class="g0-card-sub">El sistema <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.1em;margin-left:3px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
         </div>
       </div>
+
+      <p style="margin-top:32px;font-size:11px;color:#c8c8d0;letter-spacing:.04em;text-align:center">
+        Developed by &nbsp;<strong style="color:#b8b8c8;letter-spacing:.12em">F I X O R I A</strong>
+      </p>
     </div>
   </section>
 
@@ -503,11 +507,11 @@
     (function(){
       var logo = document.getElementById('welcome-bg-logo');
       if(!logo) return;
+      if(window.innerWidth <= 900) return;
+      logo.style.display = 'block';
       requestAnimationFrame(function(){
-        logo.getBoundingClientRect(); /* fuerza pintura del opacity:0 */
-        requestAnimationFrame(function(){
-          logo.classList.add('logo-static');
-        });
+        logo.getBoundingClientRect();
+        requestAnimationFrame(function(){ logo.style.opacity = '0.08'; });
       });
     })();
 
@@ -522,7 +526,7 @@
       if(fab) fab.style.display = 'flex';
       /* ocultar logo al entrar a la guía */
       var bgLogo = document.getElementById('welcome-bg-logo');
-      if(bgLogo){ bgLogo.classList.remove('logo-static'); bgLogo.classList.add('logo-out'); }
+      if(bgLogo){ bgLogo.style.opacity='0'; setTimeout(function(){ bgLogo.style.display='none'; },650); }
     }
 
     /* Si viene desde index.html con ?codigo= en la URL */
