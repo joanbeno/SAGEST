@@ -225,6 +225,12 @@
     }
     .donut-chart{width:200px; height:200px; flex-shrink:0; position:relative}
     .donut-legend{flex:1; display:flex; flex-direction:column; gap:10px}
+    @media(max-width:680px){
+      .donut-wrap{flex-direction:column;height:auto;align-items:center;gap:16px}
+      .donut-chart{width:160px;height:160px}
+      .donut-legend{width:100%;flex-direction:row;flex-wrap:wrap;gap:8px;justify-content:center}
+      .legend-item{flex:0 0 calc(50% - 4px);min-width:0}
+    }
     .legend-item{
       display:flex; align-items:center; gap:10px;
       padding:8px 12px;
