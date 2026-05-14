@@ -499,16 +499,11 @@
 
   <script>
 
-    /* ── Logo animado entrada ── */
-    (function(){
+    /* ── Logo aparece al cargar ── */
+    setTimeout(function(){
       var logo = document.getElementById('welcome-bg-logo');
-      if(!logo) return;
-      logo.classList.add('logo-in');
-      logo.addEventListener('animationend', function(){
-        logo.classList.remove('logo-in');
-        logo.classList.add('logo-static');
-      }, {once:true});
-    })();
+      if(logo) logo.classList.add('logo-static');
+    }, 80);
 
     /* ── ENTRADA CON CÓDIGO ── */
     function enterCode(){
