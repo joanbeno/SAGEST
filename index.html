@@ -772,6 +772,8 @@
 </head>
 <body>
 
+  <img id="welcome-bg-logo" src="logo_sagest_no_texto.jpeg" alt="" aria-hidden="true" />
+
   <!-- DEMO BANNER -->
   <div class="demo-banner" style="background-color: rgb(182, 149, 26)">
     <span class="demo-banner-dot"></span>
@@ -798,6 +800,7 @@
 
   <!-- ═══════════════════ PANTALLA 1 — BIENVENIDA ═══════════════════ -->
   <section class="screen active" id="screen-welcome" data-screen-label="01 Bienvenida">
+    <img class="welcome-bg-logo" id="welcome-bg-logo" src="logo_sagest_no_texto.jpeg" alt="" aria-hidden="true" />
     <div class="welcome-inner">
       <div class="welcome-badge">
         <span class="welcome-badge-dot"></span>
@@ -1688,6 +1691,26 @@
     applyTexture();
     syncUi();
 
+
+    /* ── Animación logo bienvenida ── */
+    function comenzar(){
+      var logo = document.getElementById('welcome-bg-logo');
+      if(logo){ logo.classList.add('fading'); }
+      setTimeout(function(){ goTo('c1'); }, 650);
+    }
+
+
+    /* ── Logo animado entrada ── */
+    (function(){
+      var logo = document.getElementById('welcome-bg-logo');
+      if(!logo) return;
+      logo.classList.add('logo-in');
+      logo.addEventListener('animationend', function(){
+        logo.classList.remove('logo-in');
+        logo.classList.add('logo-static');
+      }, {once:true});
+    })();
+
     /* ────────── INTERACCIÓN PREGUNTAS ────────── */
     function selectCtx(el){
       el.closest('.ctx-opts').querySelectorAll('.ctx-opt').forEach(function(o){ o.classList.remove('sel'); });
@@ -1728,6 +1751,14 @@
       if(t && ctx[screenId]) t.textContent = ctx[screenId];
       window.scrollTo({top:0, behavior:'instant'});
       if(screenId === 'm2' && !radarM2Initialized){ initRadarM2(); radarM2Initialized = true; }
+      var bgLogo = document.getElementById('welcome-bg-logo');
+      if(bgLogo){
+        if(screenId === 'm1' || screenId === 'm2'){
+          bgLogo.classList.remove('logo-static'); bgLogo.classList.add('logo-out');
+        } else {
+          bgLogo.classList.remove('logo-out'); bgLogo.classList.add('logo-static');
+        }
+      }
     }
 
     /* ────────── RADAR MOMENTO 2 ────────── */
