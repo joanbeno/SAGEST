@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAGEST — Diagnóstico organizacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      /* Wallpaper pattern */
+      --pattern-size:22px;
+      --pattern-url-light:none;
+      --pattern-url-dark:none;
+      /* Halftone texture (right side of cards) */
+      --tex-url:url('assets/texture-halftone-inv.png');
+      --tex-color:#000000;        /* tint for light cards */
+      --tex-color-d:#ffffff;      /* tint for dark cards (auto-inverted) */
+      --tex-blend:multiply;       /* blend for light cards */
+      --tex-blend-d:screen;       /* blend for dark cards */
+      --tex-opacity:0.18;
+      --tex-width:55%;
+      --tex-fade:42%;
+      --tex-enabled:1;
+      /* Superficies */
+      --bg:#f5f5f7;
+      --bg-card:#ffffff;
+      --surface-inv:#1a1a24;
+      --surface-inv-2:#23232f;
+      /* Texto */
+      --ink:#0a0a12;
+      --ink-soft:#4a4a5a;
+      --ink-muted:#909098;
+      /* Bordes */
+      --border:#e2e2e8;
+      --border-strong:#cfcfd6;
+      /* Acentos SAGEST */
+      --accent:#C1440E;        /* terracota */
+      --accent-2:#9E3509;
+      --accent-bg:#fdf0eb;
+      --accent-dim:rgba(193,68,14,.08);
+      --ocre:#D4873A;
+      --ocre-bg:#fdf5e4;
+      --slate:#3D5A80;
+      --slate-bg:#eef2f7;
+      --verde-band:#2E7D52;
+      /* Semáforo */
+      --green:#00875a; --green-bg:#eaf5f0;
+      --amber:#92650a; --amber-bg:#fdf5e4;
+      --red:#c0392b;   --red-bg:#fdecea;
+      /* Forma */
+      --radius:14px;
+      --radius-sm:8px;
+      --radius-xs:4px;
+      --shadow:0 1px 3px rgba(15,15,30,.04), 0 6px 24px rgba(15,15,30,.06);
+      --shadow-lg:0 8px 40px rgba(15,15,30,.10);
+      --t:.22s cubic-bezier(.4,0,.2,1);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'DM Sans',system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      min-height:100vh;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    /* ────────── BANNER DEMO ────────── */
+    .demo-banner{
+      position:fixed; top:0; left:0; right:0;
+      background:var(--ocre); color:#fff;
+      font-size:12px; font-weight:500; letter-spacing:.04em;
+      padding:7px 24px; text-align:center; z-index:120;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .demo-banner-dot{width:6px; height:6px; border-radius:50%; background:#fff; opacity:.9}
+    .demo-banner strong{font-weight:700; letter-spacing:.06em}
+
+    /* ────────── TOPBAR ────────── */
+    .topbar{
+      position:fixed; top:32px; left:0; right:0;
+      height:64px; background:rgba(255,255,255,.92);
+      backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      display:flex; align-items:center; padding:0 32px;
+      z-index:110;
+    }
+    .topbar::after{
+      content:''; position:absolute; bottom:0; left:0; right:0;
+      height:4px;
+      background:linear-gradient(to right,
+        var(--verde-band) 0%, var(--verde-band) 50%,
+        var(--ocre) 50%, var(--ocre) 100%);
+    }
+    .topbar-logo{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .topbar-logo img{height:36px; width:auto; display:block}
+    .topbar-divider{width:1px; height:22px; background:var(--border); margin:0 18px}
+    .topbar-title{
+      font-family:'DM Sans',sans-serif;
+      font-size:13px; font-weight:500; color:var(--ink-soft);
+      letter-spacing:.01em;
+    }
+    .topbar-right{margin-left:auto; display:flex; align-items:center; gap:14px}
+    .topbar-chip{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:11px; font-weight:600; color:var(--ocre);
+      background:var(--ocre-bg);
+      padding:5px 10px; border-radius:100px;
+      letter-spacing:.04em;
+    }
+    .topbar-chip-dot{width:6px; height:6px; border-radius:50%; background:var(--ocre)}
+    .step-counter{font-size:12px; color:var(--ink-muted); font-weight:500}
+
+    /* ────────── PROGRESS ────────── */
+    .progress-wrap{
+      max-width:760px; margin:0 auto;
+      padding:120px 24px 0; width:100%;
+    }
+    .progress-info{
+      display:flex; justify-content:space-between; align-items:baseline;
+      margin-bottom:8px;
+    }
+    .progress-section{
+      font-size:11px; font-weight:600; color:var(--accent);
+      letter-spacing:.08em; text-transform:uppercase;
+    }
+    .progress-count{font-size:11px; color:var(--ink-muted); font-weight:500}
+    .progress-track{
+      height:3px; background:var(--border);
+      border-radius:100px; overflow:hidden;
+    }
+    .progress-fill{
+      height:100%; background:var(--accent);
+      border-radius:100px;
+      transition:width .55s cubic-bezier(.22,1,.36,1);
+    }
+
+    /* ────────── SCREEN ROUTING ────────── */
+    .screen{display:none}
+    .screen.active{display:block; animation:fadeUp .4s cubic-bezier(.4,0,.2,1) both}
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(8px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    /* ────────── WELCOME ────────── */
+    #screen-welcome{
+      padding-top:140px; padding-bottom:80px;
+      min-height:calc(100vh - 32px);
+      display:none;
+    }
+    #screen-welcome.active{display:flex; align-items:center; justify-content:center}
+    .welcome-inner{max-width:640px; width:100%; text-align:center; padding:0 24px}
+    .welcome-badge{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--accent-bg); color:var(--accent);
+      font-size:11px; font-weight:600; letter-spacing:.08em;
+      text-transform:uppercase;
+      padding:6px 14px; border-radius:100px;
+      margin-bottom:28px;
+    }
+    .welcome-badge-dot{width:6px; height:6px; border-radius:50%; background:var(--accent)}
+    .welcome-title{
+      font-family:'DM Serif Display',serif;
+      font-size:clamp(34px, 5.2vw, 50px);
+      line-height:1.06; color:var(--ink);
+      letter-spacing:-.015em;
+      margin-bottom:22px;
+    }
+    .welcome-title em{font-style:italic; color:var(--accent)}
+    .welcome-subtitle{
+      font-size:17px; font-weight:300;
+      color:var(--ink-soft); line-height:1.65;
+      max-width:520px; margin:0 auto 22px;
+    }
+    .welcome-promise{
+      display:inline-flex; align-items:center; gap:10px;
+      background:var(--green-bg); color:var(--green);
+      font-size:13px; font-weight:500; line-height:1.5;
+      padding:12px 22px; border-radius:100px;
+      max-width:580px; margin-bottom:40px;
+      text-align:left;
+    }
+    .welcome-promise svg{
+      width:16px; height:16px; flex-shrink:0;
+      stroke:var(--green); stroke-width:2.4; fill:none;
+    }
+    .welcome-meta{
+      display:flex; justify-content:center; gap:36px;
+      flex-wrap:wrap; margin-bottom:40px;
+    }
+    .meta-item{display:flex; align-items:center; gap:10px}
+    .meta-icon{
+      width:34px; height:34px; border-radius:10px;
+      background:var(--bg-card); border:1px solid var(--border);
+      display:grid; place-items:center;
+    }
+    .meta-icon svg{
+      width:16px; height:16px;
+      stroke:var(--slate); stroke-width:1.7; fill:none;
+      stroke-linecap:round; stroke-linejoin:round;
+    }
+    .meta-text{
+      text-align:left;
+      font-size:13px; color:var(--ink-soft); font-weight:500;
+    }
+    .meta-text small{
+      display:block; font-size:10.5px; color:var(--ink-muted);
+      font-weight:400; letter-spacing:.04em; text-transform:uppercase;
+    }
+    .welcome-disclaimer{
+      font-size:12px; color:var(--ink-muted);
+      line-height:1.6; margin-top:22px;
+      max-width:480px; margin-left:auto; margin-right:auto;
+    }
+    .welcome-disclaimer strong{color:var(--ink-soft); font-weight:600}
+
+    /* ────────── BUTTONS ────────── */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 28px;
+      border-radius:var(--radius-sm);
+      font-family:'DM Sans',sans-serif;
+      font-size:15px; font-weight:500;
+      cursor:pointer; border:none; text-decoration:none;
+      transition:var(--t); white-space:nowrap;
+    }
+    .btn-primary{
+      background:var(--accent); color:#fff;
+      box-shadow:0 4px 14px rgba(193,68,14,.22);
+    }
+    .btn-primary:hover{
+      background:var(--accent-2);
+      transform:translateY(-1px);
+      box-shadow:0 6px 20px rgba(193,68,14,.30);
+    }
+    .btn-primary:active{transform:translateY(0)}
+    .btn-ghost{background:transparent; color:var(--ink-soft); border:1px solid var(--border)}
+    .btn-ghost:hover{background:var(--bg); color:var(--ink); border-color:var(--border-strong)}
+    .btn-lg{padding:16px 36px; font-size:16px}
+    .btn-full{width:100%}
+    .btn svg{width:16px; height:16px; stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0}
+
+    /* ────────── MOMENTO 1 LAYOUT ────────── */
+    #screen-m1{padding-bottom:120px}
+    .m1-wrap{
+      max-width:880px; margin:0 auto;
+      padding:32px 24px 0;
+    }
+    .m1-intro{margin-bottom:28px}
+    .m1-eyebrow{
+      font-size:11px; font-weight:600; color:var(--accent);
+      letter-spacing:.1em; text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .m1-h1{
+      font-family:'DM Serif Display',serif;
+      font-size:34px; line-height:1.1; color:var(--ink);
+      letter-spacing:-.012em; margin-bottom:8px;
+    }
+    .m1-sub{font-size:15px; color:var(--ink-soft); line-height:1.6; max-width:620px}
+
+    /* ── Building texture (right side of dark cards) ── */
+    .maturity-card::after{
+      content:'';
+      position:absolute; top:0; right:0; bottom:0;
+      width:65%;
+      background-image:url('assets/texture-halftone-inv.png');
+      background-size:cover;
+      background-position:right center;
+      background-repeat:no-repeat;
+      -webkit-mask-image:linear-gradient(to right, transparent 0%, black 42%);
+      mask-image:linear-gradient(to right, transparent 0%, black 42%);
+      opacity:calc(0.45 * var(--tex-enabled));
+      mix-blend-mode:screen;
+      pointer-events:none;
+      transition:opacity .2s ease;
+    }
+    .cta-card::after{
+      content:'';
+      position:absolute; top:0; right:0; bottom:0;
+      width:65%;
+      background-image:url('assets/texture-halftone-inv.png');
+      background-size:cover;
+      background-position:right center;
+      background-repeat:no-repeat;
+      -webkit-mask-image:linear-gradient(to right, transparent 0%, black 42%);
+      mask-image:linear-gradient(to right, transparent 0%, black 42%);
+      opacity:calc(0.45 * var(--tex-enabled));
+      mix-blend-mode:screen;
+      pointer-events:none;
+      transition:opacity .2s ease;
+    }
+
+    /* BLOQUE 1 — Maturity hero (dark) */
+    .maturity-card{
+      background-color:var(--surface-inv);
+      background-image:var(--pattern-url-dark);
+      background-size:var(--pattern-size) var(--pattern-size);
+      color:#fff;
+      border-radius:var(--radius); padding:34px 38px;
+      margin-bottom:32px;
+      position:relative; overflow:hidden;
+    }
+    .maturity-card::before{
+      content:''; position:absolute;
+      top:-40%; right:-10%; width:60%; height:180%;
+      background:radial-gradient(ellipse at center, rgba(212,135,58,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .maturity-eyebrow{
+      font-size:10.5px; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,255,255,.45);
+      margin-bottom:18px;
+    }
+    .maturity-row{
+      display:flex; align-items:flex-end; gap:18px;
+      margin-bottom:18px; position:relative;
+    }
+    .maturity-score{
+      font-family:'DM Serif Display',serif;
+      font-size:84px; line-height:.9;
+      color:var(--ocre); letter-spacing:-.02em;
+      font-variant-numeric:tabular-nums;
+    }
+    .maturity-of{
+      font-size:14px; color:rgba(255,255,255,.55);
+      padding-bottom:14px;
+    }
+    .maturity-badge{
+      display:inline-flex; align-items:center; gap:6px;
+      background:var(--amber-bg); color:var(--amber);
+      font-size:12px; font-weight:600; letter-spacing:.04em;
+      padding:5px 12px; border-radius:100px;
+      margin-bottom:14px;
+    }
+    .maturity-badge::before{
+      content:''; width:6px; height:6px;
+      border-radius:50%; background:var(--amber);
+    }
+    .maturity-desc{
+      font-size:15px; line-height:1.65;
+      color:rgba(255,255,255,.78);
+      max-width:600px;
+    }
+
+    /* SECTION HEADER */
+    .section-head{
+      font-size:11px; font-weight:600; color:var(--ink-muted);
+      letter-spacing:.11em; text-transform:uppercase;
+      margin-bottom:14px; display:flex; align-items:center; gap:10px;
+    }
+    .section-head::after{
+      content:''; flex:1; height:1px; background:var(--border);
+    }
+
+    /* BLOQUE 2 — Dimension grid */
+    .dim-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(245px, 1fr));
+      gap:14px;
+      margin-bottom:32px;
+    }
+    .dim-card{
+      background-color:var(--bg-card);
+      background-image:var(--pattern-url-light);
+      background-size:var(--pattern-size) var(--pattern-size);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px 22px;
+      transition:var(--t);
+      position:relative;
+    }
+    .dim-card:hover{
+      border-color:var(--border-strong);
+      transform:translateY(-1px);
+      box-shadow:var(--shadow);
+    }
+    .dim-code{
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px; font-weight:500;
+      color:var(--ink-muted); letter-spacing:.04em;
+      margin-bottom:4px;
+    }
+    .dim-name{
+      font-size:14px; font-weight:500; color:var(--ink);
+      line-height:1.35; margin-bottom:18px;
+      min-height:38px;
+    }
+    .dim-score-row{
+      display:flex; align-items:baseline; gap:12px;
+      margin-bottom:10px;
+    }
+    .dim-score{
+      font-family:'DM Serif Display',serif;
+      font-size:28px; color:var(--ink);
+      line-height:1; font-variant-numeric:tabular-nums;
+    }
+    .dim-of{font-size:12px; color:var(--ink-muted)}
+    .dim-bar-track{
+      height:6px; background:var(--bg);
+      border-radius:100px; overflow:hidden;
+      margin-bottom:12px;
+    }
+    .dim-bar-fill{height:100%; border-radius:100px}
+    .dim-badge{
+      display:inline-flex; align-items:center; gap:5px;
+      font-size:11px; font-weight:600; letter-spacing:.04em;
+      padding:4px 10px; border-radius:100px;
+    }
+    .badge-medio{background:var(--amber-bg); color:var(--amber)}
+    .badge-bajo{background:var(--red-bg); color:var(--red)}
+    .badge-alto{background:var(--green-bg); color:var(--green)}
+    .badge-arrow{font-size:10px}
+
+    /* BLOQUE 3 — Brecha alert */
+    .brecha-card{
+      background-color:#fef7f6;
+      background-image:var(--pattern-url-light);
+      background-size:var(--pattern-size) var(--pattern-size);
+      border-left:3px solid var(--red);
+      border-radius:var(--radius);
+      padding:24px 26px;
+      margin-bottom:32px;
+      position:relative;
+    }
+    .brecha-eyebrow{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:10.5px; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--red); margin-bottom:14px;
+    }
+    .brecha-icon{
+      width:18px; height:18px; border-radius:50%;
+      background:var(--red); color:#fff;
+      display:inline-grid; place-items:center;
+      font-size:10px; font-weight:700;
+    }
+    .brecha-title{
+      font-size:16px; font-weight:600; color:var(--ink);
+      line-height:1.4; margin-bottom:12px;
+    }
+    .brecha-body{
+      font-size:13.5px; line-height:1.7;
+      color:var(--ink-soft); margin-bottom:14px;
+    }
+    .brecha-body p + p{margin-top:10px}
+    .brecha-action{
+      display:flex; align-items:center; gap:8px;
+      font-size:13px; font-weight:500; color:var(--accent);
+      padding-top:14px; border-top:1px dashed rgba(192,57,43,.18);
+    }
+    .brecha-action svg{width:14px; height:14px; stroke:var(--accent); stroke-width:2; fill:none}
+
+    /* BLOQUE 4 — Restaurant name input */
+    .input-card{
+      background-color:var(--bg-card);
+      background-image:var(--pattern-url-light);
+      background-size:var(--pattern-size) var(--pattern-size);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:22px 26px;
+      margin-bottom:32px;
+    }
+    .input-label{
+      font-size:10.5px; font-weight:600; color:var(--ink-muted);
+      letter-spacing:.1em; text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .input-desc{
+      font-size:13px; color:var(--ink-soft);
+      line-height:1.55; margin-bottom:14px;
+    }
+    .input-field{
+      width:100%;
+      padding:12px 16px;
+      border:1px solid var(--border-strong);
+      border-radius:var(--radius-sm);
+      font-family:'DM Sans',sans-serif;
+      font-size:15px; color:var(--ink);
+      background:var(--bg-card);
+      transition:var(--t);
+    }
+    .input-field:focus{
+      outline:none; border-color:var(--accent);
+      box-shadow:0 0 0 3px var(--accent-dim);
+    }
+
+    /* BLOQUE 5 — CTA dark */
+    .cta-card{
+      background-color:var(--surface-inv);
+      background-image:var(--pattern-url-dark);
+      background-size:var(--pattern-size) var(--pattern-size);
+      color:#fff;
+      border-radius:var(--radius);
+      padding:30px 34px;
+      position:relative; overflow:hidden;
+    }
+    .cta-card::before{
+      content:''; position:absolute;
+      bottom:-50%; left:-10%; width:50%; height:160%;
+      background:radial-gradient(ellipse at center, rgba(193,68,14,.16), transparent 60%);
+      pointer-events:none;
+    }
+    .cta-eyebrow{
+      font-size:10.5px; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,255,255,.45);
+      margin-bottom:14px;
+    }
+    .cta-title{
+      font-family:'DM Serif Display',serif;
+      font-size:24px; line-height:1.2; color:#fff;
+      letter-spacing:-.005em;
+      margin-bottom:14px; max-width:560px;
+      position:relative;
+    }
+    .cta-body{
+      font-size:14px; line-height:1.65;
+      color:rgba(255,255,255,.72);
+      max-width:580px; margin-bottom:24px;
+      position:relative;
+    }
+    .cta-button{position:relative}
+
+    /* ────────── TWEAKS PANEL ────────── */
+    .tweaks-panel{
+      position:fixed; bottom:20px; right:20px;
+      width:300px; background:#fff;
+      border:1px solid var(--border-strong);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-lg);
+      padding:18px 18px 16px;
+      font-family:'DM Sans',sans-serif;
+      font-size:13px; color:var(--ink);
+      z-index:200;
+      display:none;
+      max-height:calc(100vh - 100px);
+      overflow-y:auto;
+    }
+    .tweaks-section{
+      margin-top:18px; padding-top:16px;
+      border-top:1px solid var(--border);
+    }
+    .tweaks-section-head{
+      font-size:10px; font-weight:700; color:var(--ink);
+      letter-spacing:.14em; text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .tweak-swatches{
+      display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;
+    }
+    .tweak-swatch{
+      aspect-ratio:1/1; border-radius:6px; cursor:pointer;
+      border:2px solid transparent;
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+      transition:var(--t);
+    }
+    .tweak-swatch:hover{transform:scale(1.08)}
+    .tweak-swatch.active{
+      border-color:var(--accent);
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,.08), 0 0 0 2px var(--accent-dim);
+    }
+    .tweak-blend{
+      display:grid; grid-template-columns:repeat(4, 1fr); gap:4px;
+    }
+    .tweak-blend button{
+      background:var(--bg); border:1px solid var(--border);
+      border-radius:6px; padding:6px 4px;
+      font-family:'DM Sans',sans-serif; font-size:10.5px;
+      color:var(--ink-soft); cursor:pointer;
+      transition:var(--t);
+    }
+    .tweak-blend button:hover{border-color:var(--border-strong); color:var(--ink)}
+    .tweak-blend button.active{
+      background:var(--ink); border-color:var(--ink); color:#fff;
+    }
+    .tweaks-panel.open{display:block; animation:fadeUp .25s cubic-bezier(.4,0,.2,1) both}
+    .tweaks-head{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:14px;
+    }
+    .tweaks-title{
+      font-size:11px; font-weight:600; color:var(--ink-muted);
+      letter-spacing:.12em; text-transform:uppercase;
+    }
+    .tweaks-close{
+      background:none; border:none; cursor:pointer;
+      color:var(--ink-muted); font-size:18px; line-height:1;
+      padding:2px 6px; border-radius:4px;
+    }
+    .tweaks-close:hover{background:var(--bg); color:var(--ink)}
+    .tweak-row{margin-bottom:14px}
+    .tweak-row:last-child{margin-bottom:0}
+    .tweak-label{
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:11.5px; font-weight:500; color:var(--ink-soft);
+      margin-bottom:6px;
+    }
+    .tweak-label span:last-child{
+      font-family:'JetBrains Mono',monospace;
+      font-size:10.5px; color:var(--ink-muted);
+    }
+    .tweak-segs{
+      display:grid; grid-template-columns:repeat(5,1fr); gap:4px;
+    }
+    .tweak-seg{
+      background:var(--bg); border:1px solid var(--border);
+      border-radius:6px; padding:8px 0;
+      display:grid; place-items:center;
+      cursor:pointer; transition:var(--t);
+    }
+    .tweak-seg:hover{border-color:var(--border-strong)}
+    .tweak-seg.active{
+      background:var(--ink); border-color:var(--ink);
+    }
+    .tweak-seg svg{width:14px; height:14px}
+    .tweak-seg .fg{fill:var(--ink-soft); stroke:var(--ink-soft)}
+    .tweak-seg.active .fg{fill:#fff; stroke:#fff}
+    .tweak-range{
+      width:100%; -webkit-appearance:none; appearance:none;
+      height:3px; background:var(--border); border-radius:100px;
+      outline:none;
+    }
+    .tweak-range::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none;
+      width:14px; height:14px; border-radius:50%;
+      background:var(--accent); cursor:pointer;
+      box-shadow:0 1px 3px rgba(0,0,0,.15);
+    }
+    .tweak-range::-moz-range-thumb{
+      width:14px; height:14px; border-radius:50%; border:none;
+      background:var(--accent); cursor:pointer;
+    }
+    .tweak-toggle-row{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:6px 0;
+    }
+    .tweak-switch{
+      position:relative; width:34px; height:20px;
+      background:var(--border-strong); border-radius:100px;
+      cursor:pointer; transition:var(--t);
+    }
+    .tweak-switch::after{
+      content:''; position:absolute; top:2px; left:2px;
+      width:16px; height:16px; border-radius:50%;
+      background:#fff; transition:var(--t);
+      box-shadow:0 1px 3px rgba(0,0,0,.2);
+    }
+    .tweak-switch.on{background:var(--accent)}
+    .tweak-switch.on::after{transform:translateX(14px)}
+
+    /* ────────── MOBILE ────────── */
+    @media (max-width:640px){
+      .topbar{padding:0 16px}
+      .topbar-divider, .topbar-title{display:none}
+      .m1-wrap{padding:24px 16px 0}
+      .maturity-card, .cta-card{padding:24px}
+      .maturity-score{font-size:64px}
+      .m1-h1{font-size:26px}
+      .welcome-meta{gap:18px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner" style="background-color: rgb(182, 149, 26)">
+    <span class="demo-banner-dot"></span>
+    <span><strong>MODO DEMO</strong> &nbsp;·&nbsp; Datos de ejemplo para presentación</span>
+  </div>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <a class="topbar-logo" href="#" data-go="welcome">
+      <img src="assets/sagest-logo.png" alt="SAGEST" />
+    </a>
+    <span class="topbar-divider"></span>
+    <span class="topbar-title" id="topbar-context">Sistema de Apredizaje </span>
+    <div class="topbar-right">
+      <span class="topbar-chip">
+        <span class="topbar-chip-dot"></span>
+        Modo demo
+      </span>
+      <a href="facilitador.html" class="step-counter" style="text-decoration:none; color:var(--slate); font-weight:500">
+        Panel facilitador →
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ PANTALLA 1 — BIENVENIDA ═══════════════════ -->
+  <section class="screen active" id="screen-welcome" data-screen-label="01 Bienvenida">
+    <div class="welcome-inner">
+      <div class="welcome-badge">
+        <span class="welcome-badge-dot"></span>
+        Diagnóstico organizacional · Restaurantes de Popayán
+      </div>
+
+      <h1 class="welcome-title">
+        Descubre cómo <em style="font-family: &quot;DM Serif Display&quot;; color: rgb(212, 135, 58)">aprende</em><br />tu restaurante
+      </h1>
+
+      <p class="welcome-subtitle">
+        No mide lo que sabes — mide cómo tu restaurante retiene,
+        comparte y usa el conocimiento de su equipo.
+        Diseñado para la gastronomía de Popayán.
+      </p>
+
+      <div class="welcome-promise">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Al completar los dos módulos, accedes a tu guía personalizada con recomendaciones concretas para tu rol y tu restaurante.</span>
+      </div>
+
+      <div class="welcome-meta">
+        <div class="meta-item">
+          <span class="meta-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+          </span>
+          <span class="meta-text"><small>Duración</small>15 minutos aprox.</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">
+            <svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"></rect><line x1="12" y1="18" x2="12" y2="18.01"></line></svg>
+          </span>
+          <span class="meta-text"><small>Dispositivo</small>Funciona en celular</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">
+            <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          </span>
+          <span class="meta-text"><small>Privacidad</small>Respuestas confidenciales</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" onclick="goTo('m1')" style="background-color: rgb(30, 114, 228)">
+        Comenzar diagnóstico
+      </button>
+
+      <p class="welcome-disclaimer" style="font-family: system-ui">Este diagnóstico es parte de una investigación académica de la Maestría en Gestión del Talento Humano — Universidad ICESI. 
+
+
+ Developed by  F I X O R I A • Todos los derechos reservados ©</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PANTALLA 5 — MOMENTO 1 ═══════════════════ -->
+  <section class="screen" id="screen-m1" data-screen-label="05 Momento 1 — Resultados Stage 1">
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-section">Módulo 1 · Resultados intermedios</span>
+        <span class="progress-count">55% completado</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:55%"></div>
+      </div>
+    </div>
+
+    <div class="m1-wrap">
+      <div class="m1-intro">
+        <div class="m1-eyebrow" style="color: rgb(14, 122, 193)">Restaurante La Antigua · Juliana Muñoz · Chef / Jefe de cocina</div>
+        <h1 class="m1-h1">Resultados del Módulo 1</h1>
+        <p class="m1-sub">Has completado las 13 preguntas del diagnóstico base. Este es el nivel de desarrollo organizacional de tu restaurante en las dimensiones D1 a D5.</p>
+      </div>
+
+      <!-- BLOQUE 1 — Maturity hero -->
+      <div class="maturity-card">
+        <div class="maturity-eyebrow">Tu nivel de desarrollo organizacional</div>
+        <div class="maturity-row">
+          <span class="maturity-score">2.72</span>
+          <span class="maturity-of">de 5.0</span>
+        </div>
+        <div class="maturity-badge">Nivel 2 — Desarrollo</div>
+        <p class="maturity-desc">
+          El aprendizaje ocurre en este restaurante, pero no se retiene.
+          Las estructuras existen pero están inactivas o desactualizadas.
+          El salto al siguiente nivel no requiere crear más cosas —
+          requiere activar lo que ya tienen.
+        </p>
+      </div>
+
+      <!-- BLOQUE 2 — Dimension grid -->
+      <h2 class="section-head">Resultados por dimensión — Módulo 1</h2>
+      <div class="dim-grid">
+
+        <div class="dim-card">
+          <div class="dim-code">D1</div>
+          <div class="dim-name">Aprendizaje organizacional</div>
+          <div class="dim-score-row">
+            <span class="dim-score">2.80</span>
+            <span class="dim-of">/ 5.0</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-fill" style="width: 56%; background: var(--amber); background-color: rgb(146, 52, 10)"></div>
+          </div>
+          <span class="dim-badge badge-medio">Medio <span class="badge-arrow">→</span></span>
+        </div>
+
+        <div class="dim-card">
+          <div class="dim-code">D2</div>
+          <div class="dim-name">Gestión del conocimiento</div>
+          <div class="dim-score-row">
+            <span class="dim-score">2.50</span>
+            <span class="dim-of">/ 5.0</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-fill" style="width: 50%; background: var(--amber); background-color: rgb(76, 146, 10)"></div>
+          </div>
+          <span class="dim-badge badge-medio">Medio <span class="badge-arrow">→</span></span>
+        </div>
+
+        <div class="dim-card">
+          <div class="dim-code">D3</div>
+          <div class="dim-name">Capital humano</div>
+          <div class="dim-score-row">
+            <span class="dim-score">3.00</span>
+            <span class="dim-of">/ 5.0</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-fill" style="width: 60%; background: var(--amber); background-color: rgb(10, 146, 146)"></div>
+          </div>
+          <span class="dim-badge badge-medio">Medio <span class="badge-arrow">→</span></span>
+        </div>
+
+        <div class="dim-card">
+          <div class="dim-code">D4</div>
+          <div class="dim-name">Cultura organizacional</div>
+          <div class="dim-score-row">
+            <span class="dim-score">3.00</span>
+            <span class="dim-of">/ 5.0</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-fill" style="width:60%; background:var(--amber)"></div>
+          </div>
+          <span class="dim-badge badge-medio">Medio <span class="badge-arrow">→</span></span>
+        </div>
+
+        <div class="dim-card">
+          <div class="dim-code">D5</div>
+          <div class="dim-name">Desempeño organizacional</div>
+          <div class="dim-score-row">
+            <span class="dim-score">2.30</span>
+            <span class="dim-of">/ 5.0</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-fill" style="width: 46%; background: var(--red); background-color: rgb(155, 43, 192)"></div>
+          </div>
+          <span class="dim-badge badge-bajo">Bajo <span class="badge-arrow">⬇</span></span>
+        </div>
+
+      </div>
+
+      <!-- BLOQUE 3 — Brecha alert -->
+      <div class="brecha-card">
+        <div class="brecha-eyebrow">
+          <span class="brecha-icon">!</span>
+          Brecha detectada
+        </div>
+        <h3 class="brecha-title">
+          Tu equipo aprende, pero el restaurante no retiene ese aprendizaje.
+        </h3>
+        <div class="brecha-body">
+          <p>
+            En Aprendizaje organizacional y Gestión del conocimiento, el nivel
+            individual es significativamente más alto que el nivel organizacional.
+            Esto significa que el conocimiento vive en las personas — cuando alguien
+            se va, ese conocimiento se va con ellas.
+          </p>
+          <p>
+            Esta es la brecha más frecuente en los restaurantes de Popayán:
+            el <strong>67% de los establecimientos</strong> diagnosticados presenta este patrón.
+          </p>
+        </div>
+        <div class="brecha-action">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          <span>Tu guía personalizada incluye un plan concreto para cerrar esta brecha.</span>
+        </div>
+      </div>
+
+      <!-- BLOQUE 4 — Restaurant name input -->
+      <div class="input-card">
+        <div class="input-label">Nombre de tu restaurante</div>
+        <p class="input-desc">
+          Este dato permite al investigador agrupar las respuestas del mismo
+          establecimiento. Es opcional.
+        </p>
+        <input type="text" class="input-field" value="Restaurante La Antigua" />
+      </div>
+
+      <!-- BLOQUE 5 — CTA to Stage 2 -->
+      <div class="cta-card">
+        <div class="cta-eyebrow">Módulo 2 disponible</div>
+        <h3 class="cta-title">
+          Completa el Módulo 2 para acceder a tu guía personalizada
+        </h3>
+        <p class="cta-body">
+          El Módulo 2 evalúa las capacidades estratégicas, la innovación
+          y la adaptación al contexto de tu restaurante. Al completarlo,
+          recibirás tu código SAG-XXXX con acceso a recomendaciones profundas,
+          planes de acción y recursos específicos para tu rol.
+        </p>
+        <div class="cta-button">
+          <button class="btn btn-primary btn-lg btn-full" onclick="alert('Pantalla 6 (Stage 2) — pendiente en el siguiente sprint del mockup.')" style="background-color: rgb(30, 114, 228)">
+            Continuar al Módulo 2
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+        <button class="btn btn-ghost" onclick="goTo('welcome')">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Volver al inicio
+        </button>
+        <span style="font-size:12px; color:var(--ink-muted)">
+          Las pantallas 2–4 (Likert e ítems binarios) se entregan en el siguiente sprint.
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TWEAKS PANEL ═══════════════════ -->
+  <aside class="tweaks-panel" id="tweaks-panel" aria-label="Tweaks">
+    <div class="tweaks-head">
+      <span class="tweaks-title">Tweaks · Papel tapiz</span>
+      <button class="tweaks-close" id="tweaks-close" aria-label="Cerrar">×</button>
+    </div>
+
+    <div class="tweak-row">
+      <div class="tweak-label"><span>Figura</span><span id="lbl-shape">punto</span></div>
+      <div class="tweak-segs" id="seg-shape">
+        <button class="tweak-seg" data-shape="dot" title="Punto">
+          <svg viewBox="0 0 14 14"><circle class="fg" cx="7" cy="7" r="2"/></svg>
+        </button>
+        <button class="tweak-seg" data-shape="ring" title="Anillo">
+          <svg viewBox="0 0 14 14"><circle class="fg" cx="7" cy="7" r="2.5" fill="none" stroke-width="1.2"/></svg>
+        </button>
+        <button class="tweak-seg" data-shape="cross" title="Cruz">
+          <svg viewBox="0 0 14 14"><path class="fg" d="M3 7h8M7 3v8" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
+        </button>
+        <button class="tweak-seg" data-shape="diamond" title="Rombo">
+          <svg viewBox="0 0 14 14"><rect class="fg" x="5" y="5" width="4" height="4" transform="rotate(45 7 7)"/></svg>
+        </button>
+        <button class="tweak-seg" data-shape="square" title="Cuadro">
+          <svg viewBox="0 0 14 14"><rect class="fg" x="5.5" y="5.5" width="3" height="3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tweak-row">
+      <div class="tweak-label"><span>Densidad (figuras a lo ancho)</span><span id="lbl-density">36</span></div>
+      <input type="range" min="18" max="60" step="1" class="tweak-range" id="rng-density" />
+    </div>
+
+    <div class="tweak-row">
+      <div class="tweak-label"><span>Opacidad</span><span id="lbl-opacity">0.06</span></div>
+      <input type="range" min="0" max="0.18" step="0.005" class="tweak-range" id="rng-opacity" />
+    </div>
+
+    <div class="tweak-row">
+      <div class="tweak-toggle-row">
+        <span style="font-size:12.5px; color:var(--ink-soft)">Activar papel tapiz</span>
+        <div class="tweak-switch on" id="sw-enabled" role="switch" tabindex="0"></div>
+      </div>
+    </div>
+
+    <div class="tweaks-section">
+      <div class="tweaks-section-head">Textura · cards oscuras</div>
+
+      <div class="tweak-row">
+        <div class="tweak-label"><span>Color</span><span id="lbl-tex-color">negro</span></div>
+        <div class="tweak-swatches" id="tex-swatches">
+          <div class="tweak-swatch" data-color="#000000" data-name="negro" style="background:#000"></div>
+          <div class="tweak-swatch" data-color="#ffffff" data-name="blanco" style="background:#fff"></div>
+          <div class="tweak-swatch" data-color="#C1440E" data-name="terracota" style="background:#C1440E"></div>
+          <div class="tweak-swatch" data-color="#D4873A" data-name="ocre" style="background:#D4873A"></div>
+          <div class="tweak-swatch" data-color="#3D5A80" data-name="pizarra" style="background:#3D5A80"></div>
+        </div>
+      </div>
+
+      <div class="tweak-row">
+        <div class="tweak-label"><span>Opacidad</span><span id="lbl-tex-opacity">0.18</span></div>
+        <input type="range" min="0" max="0.6" step="0.01" class="tweak-range" id="rng-tex-opacity" />
+      </div>
+
+      <div class="tweak-row">
+        <div class="tweak-label"><span>Ancho (lado derecho)</span><span id="lbl-tex-width">55%</span></div>
+        <input type="range" min="20" max="100" step="1" class="tweak-range" id="rng-tex-width" />
+      </div>
+
+      <div class="tweak-row">
+        <div class="tweak-label"><span>Suavidad del borde</span><span id="lbl-tex-fade">42%</span></div>
+        <input type="range" min="0" max="80" step="1" class="tweak-range" id="rng-tex-fade" />
+      </div>
+
+      <div class="tweak-row">
+        <div class="tweak-label"><span>Modo de capa</span><span id="lbl-tex-blend">multiply</span></div>
+        <div class="tweak-blend" id="seg-blend">
+          <button data-blend="normal">normal</button>
+          <button data-blend="multiply">multiply</button>
+          <button data-blend="screen">screen</button>
+          <button data-blend="overlay">overlay</button>
+        </div>
+      </div>
+
+      <div class="tweak-row">
+        <div class="tweak-toggle-row">
+          <span style="font-size:12.5px; color:var(--ink-soft)">Auto-invertir color (recom.)</span>
+          <div class="tweak-switch on" id="sw-tex-invert" role="switch" tabindex="0"></div>
+        </div>
+      </div>
+
+      <div class="tweak-row">
+        <div class="tweak-toggle-row">
+          <span style="font-size:12.5px; color:var(--ink-soft)">Activar textura</span>
+          <div class="tweak-switch on" id="sw-tex-enabled" role="switch" tabindex="0"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    /* ────────── PAPEL TAPIZ + TWEAKS ────────── */
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "patternShape": "dot",
+      "patternDensity": 58,
+      "patternOpacity": 0.015,
+      "patternEnabled": true,
+      "texColor": "#000000",
+      "texColorName": "negro",
+      "texOpacity": 0.21,
+      "texWidth": 47,
+      "texFade": 34,
+      "texBlend": "screen",
+      "texInvertDark": true,
+      "texEnabled": true
+    }/*EDITMODE-END*/;
+
+    // Width reference: the .maturity-card spans ~832px in full width.
+    // 36 figures across → tile ≈ 23px. 12 tall → 12 × 23 ≈ 276px (la altura de la card).
+    const CARD_REF_WIDTH = 832;
+
+    const tweaks = Object.assign({}, TWEAK_DEFAULTS);
+
+    function shapeSvg(shape, size, color, opacity){
+      const cx = size/2, cy = size/2;
+      // Figure scale: figure stays small relative to tile (≈ 1/7 of tile).
+      const r = Math.max(1, size * 0.075);
+      let inner = '';
+      switch(shape){
+        case 'dot':
+          inner = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" fill-opacity="${opacity}"/>`;
+          break;
+        case 'ring':
+          inner = `<circle cx="${cx}" cy="${cy}" r="${r*1.25}" fill="none" stroke="${color}" stroke-opacity="${opacity}" stroke-width="0.9"/>`;
+          break;
+        case 'cross':
+          inner = `<path d="M${cx-r*1.4} ${cy} h${r*2.8} M${cx} ${cy-r*1.4} v${r*2.8}" stroke="${color}" stroke-opacity="${opacity}" stroke-width="0.9" stroke-linecap="round"/>`;
+          break;
+        case 'diamond':
+          inner = `<rect x="${cx-r}" y="${cy-r}" width="${r*2}" height="${r*2}" transform="rotate(45 ${cx} ${cy})" fill="${color}" fill-opacity="${opacity}"/>`;
+          break;
+        case 'square':
+          inner = `<rect x="${cx-r}" y="${cy-r}" width="${r*2}" height="${r*2}" fill="${color}" fill-opacity="${opacity}"/>`;
+          break;
+      }
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${inner}</svg>`;
+      return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+    }
+
+    function applyPattern(){
+      const root = document.documentElement;
+      const tile = Math.max(8, CARD_REF_WIDTH / tweaks.patternDensity);
+      root.style.setProperty('--pattern-size', tile.toFixed(2) + 'px');
+      if(!tweaks.patternEnabled){
+        root.style.setProperty('--pattern-url-light', 'none');
+        root.style.setProperty('--pattern-url-dark', 'none');
+        return;
+      }
+      // Light cards → dark figure; dark cards → light figure.
+      const urlLight = shapeSvg(tweaks.patternShape, tile, '#0a0a12', tweaks.patternOpacity * 1.4);
+      const urlDark  = shapeSvg(tweaks.patternShape, tile, '#ffffff', tweaks.patternOpacity * 1.6);
+      root.style.setProperty('--pattern-url-light', urlLight);
+      root.style.setProperty('--pattern-url-dark', urlDark);
+    }
+
+    /* ─── Halftone right-side texture ─── */
+    function invertHex(hex){
+      const h = hex.replace('#','');
+      const r = 255 - parseInt(h.slice(0,2),16);
+      const g = 255 - parseInt(h.slice(2,4),16);
+      const b = 255 - parseInt(h.slice(4,6),16);
+      const to = (n)=>n.toString(16).padStart(2,'0');
+      return '#' + to(r) + to(g) + to(b);
+    }
+    function swapBlend(m){
+      return ({multiply:'screen', screen:'multiply', normal:'normal', overlay:'overlay'})[m] || m;
+    }
+    function applyTexture(){
+      const root = document.documentElement;
+      root.style.setProperty('--tex-enabled', tweaks.texEnabled ? 1 : 0);
+      root.style.setProperty('--tex-opacity', tweaks.texOpacity);
+      root.style.setProperty('--tex-width', tweaks.texWidth + '%');
+      root.style.setProperty('--tex-fade', tweaks.texFade + '%');
+      // Texture only renders on dark cards. Blend mode is exactly what the user picked.
+      root.style.setProperty('--tex-blend', tweaks.texBlend);
+      // Color: if auto-invert is ON, flip user color (so picking "negro" yields visible
+      // white on a dark background). If OFF, apply user color literally.
+      const applied = tweaks.texInvertDark ? invertHex(tweaks.texColor) : tweaks.texColor;
+      root.style.setProperty('--tex-color', tweaks.texColor);
+      root.style.setProperty('--tex-color-applied', applied);
+    }
+
+    /* ─── UI bindings ─── */
+    const panel = document.getElementById('tweaks-panel');
+    const segShape = document.getElementById('seg-shape');
+    const rngDensity = document.getElementById('rng-density');
+    const rngOpacity = document.getElementById('rng-opacity');
+    const swEnabled = document.getElementById('sw-enabled');
+    const lblShape = document.getElementById('lbl-shape');
+    const lblDensity = document.getElementById('lbl-density');
+    const lblOpacity = document.getElementById('lbl-opacity');
+    const SHAPE_LABEL = {dot:'punto', ring:'anillo', cross:'cruz', diamond:'rombo', square:'cuadro'};
+
+    // Texture controls
+    const texSwatches = document.getElementById('tex-swatches');
+    const rngTexOpacity = document.getElementById('rng-tex-opacity');
+    const rngTexWidth = document.getElementById('rng-tex-width');
+    const rngTexFade = document.getElementById('rng-tex-fade');
+    const segBlend = document.getElementById('seg-blend');
+    const swTexInvert = document.getElementById('sw-tex-invert');
+    const swTexEnabled = document.getElementById('sw-tex-enabled');
+    const lblTexColor = document.getElementById('lbl-tex-color');
+    const lblTexOpacity = document.getElementById('lbl-tex-opacity');
+    const lblTexWidth = document.getElementById('lbl-tex-width');
+    const lblTexFade = document.getElementById('lbl-tex-fade');
+    const lblTexBlend = document.getElementById('lbl-tex-blend');
+
+    function syncUi(){
+      [...segShape.querySelectorAll('.tweak-seg')].forEach(b=>{
+        b.classList.toggle('active', b.dataset.shape === tweaks.patternShape);
+      });
+      lblShape.textContent = SHAPE_LABEL[tweaks.patternShape] || tweaks.patternShape;
+      rngDensity.value = tweaks.patternDensity;
+      lblDensity.textContent = tweaks.patternDensity;
+      rngOpacity.value = tweaks.patternOpacity;
+      lblOpacity.textContent = tweaks.patternOpacity.toFixed(3);
+      swEnabled.classList.toggle('on', !!tweaks.patternEnabled);
+
+      // Texture UI
+      [...texSwatches.querySelectorAll('.tweak-swatch')].forEach(s=>{
+        s.classList.toggle('active', s.dataset.color.toLowerCase() === (tweaks.texColor || '').toLowerCase());
+      });
+      lblTexColor.textContent = tweaks.texColorName || tweaks.texColor;
+      rngTexOpacity.value = tweaks.texOpacity;
+      lblTexOpacity.textContent = Number(tweaks.texOpacity).toFixed(2);
+      rngTexWidth.value = tweaks.texWidth;
+      lblTexWidth.textContent = tweaks.texWidth + '%';
+      rngTexFade.value = tweaks.texFade;
+      lblTexFade.textContent = tweaks.texFade + '%';
+      [...segBlend.querySelectorAll('button')].forEach(b=>{
+        b.classList.toggle('active', b.dataset.blend === tweaks.texBlend);
+      });
+      lblTexBlend.textContent = tweaks.texBlend;
+      swTexInvert.classList.toggle('on', !!tweaks.texInvertDark);
+      swTexEnabled.classList.toggle('on', !!tweaks.texEnabled);
+    }
+
+    function persist(keys){
+      try{
+        window.parent.postMessage({type:'__edit_mode_set_keys', edits:keys}, '*');
+      }catch(e){}
+    }
+
+    function set(keys){
+      Object.assign(tweaks, keys);
+      applyPattern();
+      applyTexture();
+      syncUi();
+      persist(keys);
+    }
+
+    segShape.addEventListener('click', (e)=>{
+      const b = e.target.closest('.tweak-seg');
+      if(!b) return;
+      set({patternShape: b.dataset.shape});
+    });
+    rngDensity.addEventListener('input', (e)=>{
+      tweaks.patternDensity = parseInt(e.target.value, 10);
+      applyPattern();
+      lblDensity.textContent = tweaks.patternDensity;
+    });
+    rngDensity.addEventListener('change', ()=>persist({patternDensity: tweaks.patternDensity}));
+    rngOpacity.addEventListener('input', (e)=>{
+      tweaks.patternOpacity = parseFloat(e.target.value);
+      applyPattern();
+      lblOpacity.textContent = tweaks.patternOpacity.toFixed(3);
+    });
+    rngOpacity.addEventListener('change', ()=>persist({patternOpacity: tweaks.patternOpacity}));
+    swEnabled.addEventListener('click', ()=>{
+      set({patternEnabled: !tweaks.patternEnabled});
+    });
+    swEnabled.addEventListener('keydown', (e)=>{
+      if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); swEnabled.click(); }
+    });
+
+    /* ─── Texture bindings ─── */
+    texSwatches.addEventListener('click', (e)=>{
+      const s = e.target.closest('.tweak-swatch');
+      if(!s) return;
+      set({texColor: s.dataset.color, texColorName: s.dataset.name});
+    });
+    rngTexOpacity.addEventListener('input', (e)=>{
+      tweaks.texOpacity = parseFloat(e.target.value);
+      applyTexture();
+      lblTexOpacity.textContent = tweaks.texOpacity.toFixed(2);
+    });
+    rngTexOpacity.addEventListener('change', ()=>persist({texOpacity: tweaks.texOpacity}));
+    rngTexWidth.addEventListener('input', (e)=>{
+      tweaks.texWidth = parseInt(e.target.value, 10);
+      applyTexture();
+      lblTexWidth.textContent = tweaks.texWidth + '%';
+    });
+    rngTexWidth.addEventListener('change', ()=>persist({texWidth: tweaks.texWidth}));
+    rngTexFade.addEventListener('input', (e)=>{
+      tweaks.texFade = parseInt(e.target.value, 10);
+      applyTexture();
+      lblTexFade.textContent = tweaks.texFade + '%';
+    });
+    rngTexFade.addEventListener('change', ()=>persist({texFade: tweaks.texFade}));
+    segBlend.addEventListener('click', (e)=>{
+      const b = e.target.closest('button[data-blend]');
+      if(!b) return;
+      set({texBlend: b.dataset.blend});
+    });
+    swTexInvert.addEventListener('click', ()=>set({texInvertDark: !tweaks.texInvertDark}));
+    swTexInvert.addEventListener('keydown', (e)=>{
+      if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); swTexInvert.click(); }
+    });
+    swTexEnabled.addEventListener('click', ()=>set({texEnabled: !tweaks.texEnabled}));
+    swTexEnabled.addEventListener('keydown', (e)=>{
+      if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); swTexEnabled.click(); }
+    });
+
+    /* ─── Edit-mode protocol ─── */
+    window.addEventListener('message', (ev)=>{
+      const d = ev.data || {};
+      if(d.type === '__activate_edit_mode'){
+        panel.classList.add('open');
+      } else if(d.type === '__deactivate_edit_mode'){
+        panel.classList.remove('open');
+      }
+    });
+    document.getElementById('tweaks-close').addEventListener('click', ()=>{
+      panel.classList.remove('open');
+      try{ window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); }catch(e){}
+    });
+    try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+
+    // Apply initial pattern + sync UI on load.
+    applyPattern();
+    applyTexture();
+    syncUi();
+
+    /* ────────── SCREEN ROUTING ────────── */
+    function goTo(screenId){
+      document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+      var el = document.getElementById('screen-' + screenId);
+      if(el){ el.classList.add('active'); }
+      var ctx = {
+        welcome: 'Diagnóstico organizacional',
+        m1:      'Resultados del Módulo 1'
+      };
+      var t = document.getElementById('topbar-context');
+      if(t && ctx[screenId]) t.textContent = ctx[screenId];
+      window.scrollTo({top:0, behavior:'instant'});
+    }
+    document.querySelectorAll('[data-go]').forEach(function(el){
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        goTo(el.getAttribute('data-go'));
+      });
+    });
+  </script>
+
+</body>
+</html>
