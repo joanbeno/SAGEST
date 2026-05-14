@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
   <style>
     :root{
       /* Wallpaper pattern */
@@ -655,6 +656,74 @@
     .tweak-switch.on{background:var(--accent)}
     .tweak-switch.on::after{transform:translateX(14px)}
 
+    /* ────────── PANTALLAS INTERMEDIAS ────────── */
+    #screen-c1,#screen-s1,#screen-s1b,#screen-s2{padding-bottom:120px}
+    .q-wrap{max-width:720px;margin:0 auto;padding:32px 24px 0}
+    .q-eyebrow{font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+    .q-text{font-family:'DM Serif Display',serif;font-size:clamp(19px,3vw,26px);line-height:1.3;color:var(--ink);letter-spacing:-.01em;margin-bottom:30px}
+    .ctx-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .ctx-opt{display:flex;align-items:center;gap:14px;padding:13px 18px;background:var(--bg-card);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:var(--t);font-size:15px;color:var(--ink)}
+    .ctx-opt:hover{border-color:var(--border-strong)}
+    .ctx-opt.sel{border-color:var(--accent);background:var(--accent-bg)}
+    .ctx-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border-strong);flex-shrink:0;transition:var(--t)}
+    .ctx-opt.sel .ctx-radio{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px #fff}
+    .likert-opts{display:flex;gap:10px;margin-bottom:32px}
+    .likert-opt{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 8px;background:var(--bg-card);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:var(--t);text-align:center}
+    .likert-opt:hover{border-color:var(--border-strong)}
+    .likert-opt.sel{border-color:var(--accent);background:var(--accent-bg)}
+    .likert-num{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink-muted);line-height:1}
+    .likert-opt.sel .likert-num{color:var(--accent)}
+    .likert-lbl{font-size:10.5px;color:var(--ink-muted);font-weight:500;line-height:1.3}
+    .likert-opt.sel .likert-lbl{color:var(--accent)}
+    .binary-opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+    .binary-opt{padding:34px 20px;background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:var(--t);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .binary-opt:hover{border-color:var(--border-strong)}
+    .binary-opt.sel-yes{border-color:var(--green);background:var(--green-bg)}
+    .binary-opt.sel-no{border-color:var(--red);background:var(--red-bg)}
+    .binary-icon{font-size:28px;line-height:1}
+    .binary-lbl{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400}
+    .binary-opt.sel-yes .binary-lbl{color:var(--green)}
+    .binary-opt.sel-no .binary-lbl{color:var(--red)}
+    .ctx-note{background:var(--amber-bg);border-radius:var(--radius-xs);padding:14px 16px;margin-bottom:32px;font-size:13px;color:var(--amber);line-height:1.6}
+    .s2-intro{background:var(--slate-bg);border-left:3px solid var(--slate);border-radius:var(--radius);padding:18px 22px;margin-bottom:28px}
+    .s2-intro-title{font-size:13px;font-weight:600;color:var(--slate);margin-bottom:6px}
+    .s2-intro-body{font-size:13px;color:var(--ink-soft);line-height:1.6}
+    .q-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+    .q-hint{font-size:12px;color:var(--ink-muted)}
+
+    /* ────────── MOMENTO 2 ────────── */
+    #screen-m2{padding-bottom:120px}
+    .m2-wrap{max-width:880px;margin:0 auto;padding:32px 24px 0}
+    .sag-card{background:var(--surface-inv);color:#fff;border-radius:var(--radius);padding:34px 38px;margin-bottom:32px;position:relative;overflow:hidden;text-align:center}
+    .sag-card::before{content:'';position:absolute;top:-40%;right:-10%;width:60%;height:180%;background:radial-gradient(ellipse at center,rgba(193,68,14,.12),transparent 60%);pointer-events:none}
+    .sag-tex{position:absolute;top:0;right:0;bottom:0;width:65%;background-image:url('texture-halftone-inv.png');background-size:cover;background-position:right center;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 42%);mask-image:linear-gradient(to right,transparent 0%,black 42%);opacity:.45;mix-blend-mode:screen;pointer-events:none}
+    .sag-eyebrow{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px;position:relative}
+    .sag-code{font-family:'DM Serif Display',serif;font-size:48px;font-style:italic;color:var(--ocre);letter-spacing:.15em;margin-bottom:10px;position:relative}
+    .sag-instruction{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px;position:relative}
+    .sag-divider{border:none;border-top:1px solid rgba(255,255,255,.12);margin:20px 0;position:relative}
+    .sag-score{font-family:'DM Serif Display',serif;font-size:52px;color:var(--ocre);line-height:1;position:relative}
+    .sag-desc{font-size:13px;color:rgba(255,255,255,.6);max-width:480px;margin:12px auto 0;line-height:1.6;position:relative}
+    .chart-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px}
+    .chart-wrap canvas{max-height:340px}
+    .levels-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px}
+    .level-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .level-row:last-of-type{border-bottom:none}
+    .level-row.hl{background:var(--red-bg);margin:0 -24px;padding:10px 24px;border-bottom:none}
+    .level-name{width:130px;flex-shrink:0;font-size:13px;font-weight:500;color:var(--ink-soft)}
+    .level-track{flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden}
+    .level-fill{height:100%;border-radius:100px}
+    .level-score{font-size:14px;font-weight:600;width:36px;text-align:right;font-variant-numeric:tabular-nums}
+    .level-badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:100px}
+    .m2-rec-card{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:var(--radius);padding:24px 26px;margin-bottom:16px}
+    .m2-rec-card.brecha{background:#fef7f6}
+    .m2-rec-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-bg);padding:4px 10px;border-radius:100px;margin-bottom:12px}
+    .m2-rec-title{font-size:15px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:10px}
+    .m2-rec-body{font-size:13px;line-height:1.7;color:var(--ink-soft);margin-bottom:14px}
+    .m2-rec-action{background:var(--slate-bg);border-radius:var(--radius-xs);padding:12px 16px}
+    .m2-rec-action-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+    .m2-rec-action-text{font-size:13px;color:var(--ink);line-height:1.6}
+    .m2-insight{display:flex;align-items:flex-start;gap:10px;background:var(--amber-bg);border-radius:var(--radius-xs);padding:12px 16px;font-size:13px;color:var(--amber);line-height:1.6;margin-top:14px}
+
     /* ────────── MOBILE ────────── */
     @media (max-width:640px){
       .topbar{padding:0 16px}
@@ -681,7 +750,7 @@
       <img src="sagest-logo.png" alt="SAGEST" />
     </a>
     <span class="topbar-divider"></span>
-    <span class="topbar-title" id="topbar-context">Sistema de Apredizaje </span>
+    <span class="topbar-title" id="topbar-context">Sistema de Apredizaje </span>
     <div class="topbar-right">
       <span class="topbar-chip">
         <span class="topbar-chip-dot"></span>
@@ -737,12 +806,12 @@
         </div>
       </div>
 
-      <button class="btn btn-primary btn-lg" onclick="goTo('m1')" style="background-color: rgb(30, 114, 228)">
+      <button class="btn btn-primary btn-lg" onclick="goTo('c1')" style="background-color: rgb(30, 114, 228)">
         Comenzar diagnóstico
       </button>
 
       <p class="welcome-disclaimer" style="font-family: system-ui">Este diagnóstico es parte de una investigación académica de la Maestría en Gestión del Talento Humano — Universidad ICESI.</p>
-      <p class="welcome-disclaimer" style="font-family: system-ui; margin-top: 10px">Developed by  F I X O R I A • Todos los derechos reservados ©</p>
+      <p class="welcome-disclaimer" style="font-family: system-ui; margin-top: 10px">Developed by  F I X O R I A • Todos los derechos reservados ©</p>
     </div>
   </section>
 
@@ -903,7 +972,7 @@
           planes de acción y recursos específicos para tu rol.
         </p>
         <div class="cta-button">
-          <button class="btn btn-primary btn-lg btn-full" onclick="alert('Pantalla 6 (Stage 2) — pendiente en el siguiente sprint del mockup.')" style="background-color: rgb(30, 114, 228)">
+          <button class="btn btn-primary btn-lg btn-full" onclick="goTo('s2')" style="background-color: rgb(30, 114, 228)">
             Continuar al Módulo 2
             <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
@@ -918,6 +987,306 @@
         <span style="font-size:12px; color:var(--ink-muted)">
           Las pantallas 2–4 (Likert e ítems binarios) se entregan en el siguiente sprint.
         </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PANTALLA 2 — PREGUNTAS CONTEXTUALES ═══════════════════ -->
+  <section class="screen" id="screen-c1" data-screen-label="02 Preguntas contextuales">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-section">Sobre tu restaurante</span>
+        <span class="progress-count">10% completado</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    </div>
+    <div class="q-wrap">
+      <div class="q-eyebrow">Rol en el restaurante · Pregunta 1 de 5</div>
+      <p class="q-text">¿Cuál es tu rol en el restaurante?</p>
+      <div class="ctx-opts">
+        <div class="ctx-opt" onclick="selectCtx(this)"><span class="ctx-radio"></span>Propietario / Gerente</div>
+        <div class="ctx-opt sel" onclick="selectCtx(this)"><span class="ctx-radio"></span>Chef / Jefe de cocina</div>
+        <div class="ctx-opt" onclick="selectCtx(this)"><span class="ctx-radio"></span>Cocinero</div>
+        <div class="ctx-opt" onclick="selectCtx(this)"><span class="ctx-radio"></span>Mesero / Personal de sala</div>
+        <div class="ctx-opt" onclick="selectCtx(this)"><span class="ctx-radio"></span>Administración</div>
+        <div class="ctx-opt" onclick="selectCtx(this)"><span class="ctx-radio"></span>Otro</div>
+      </div>
+      <div class="q-nav">
+        <button class="btn btn-ghost" onclick="goTo('welcome')">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Atrás
+        </button>
+        <button class="btn btn-primary" onclick="goTo('s1')" style="background-color: rgb(30, 114, 228)">
+          Continuar
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PANTALLA 3 — PREGUNTA LIKERT I01 ═══════════════════ -->
+  <section class="screen" id="screen-s1" data-screen-label="03 Módulo 1 Likert I01">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-section">Módulo 1 · Aprendizaje organizacional</span>
+        <span class="progress-count">25% completado</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:25%"></div></div>
+    </div>
+    <div class="q-wrap">
+      <div class="q-eyebrow">Módulo 1 · Aprendizaje organizacional · Pregunta 1 de 13</div>
+      <p class="q-text">Cuando cometo un error en mi trabajo, reflexiono sobre qué salió mal y cómo mejorar.</p>
+      <div class="likert-opts">
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">1</span>
+          <span class="likert-lbl">Nunca</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">2</span>
+          <span class="likert-lbl">Pocas veces</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">3</span>
+          <span class="likert-lbl">A veces</span>
+        </div>
+        <div class="likert-opt sel" onclick="selectLikert(this)">
+          <span class="likert-num">4</span>
+          <span class="likert-lbl">Frecuentemente</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">5</span>
+          <span class="likert-lbl">Siempre</span>
+        </div>
+      </div>
+      <p class="q-hint" style="margin-bottom:24px">Ítem 1 de 13 en este módulo</p>
+      <div class="q-nav">
+        <button class="btn btn-ghost" onclick="goTo('c1')">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Anterior
+        </button>
+        <button class="btn btn-primary" onclick="goTo('s1b')" style="background-color: rgb(30, 114, 228)">
+          Siguiente
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PANTALLA 4 — PREGUNTA BINARIA I07 ═══════════════════ -->
+  <section class="screen" id="screen-s1b" data-screen-label="04 Módulo 1 Binaria I07">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-section">Módulo 1 · Gestión del conocimiento</span>
+        <span class="progress-count">35% completado</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:35%"></div></div>
+    </div>
+    <div class="q-wrap">
+      <div class="q-eyebrow">Módulo 1 · Gestión del conocimiento · Pregunta 7 de 13</div>
+      <p class="q-text">Si mañana se fuera el cocinero principal, el restaurante tiene algún registro de sus recetas y procedimientos.</p>
+      <div class="binary-opts">
+        <div class="binary-opt" onclick="selectBinary(this,'yes')">
+          <span class="binary-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span class="binary-lbl">Sí</span>
+        </div>
+        <div class="binary-opt sel-no" onclick="selectBinary(this,'no')">
+          <span class="binary-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          <span class="binary-lbl">No</span>
+        </div>
+      </div>
+      <div class="ctx-note">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.18em;margin-right:5px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Esta pregunta mide la memoria organizacional del restaurante — uno de los indicadores más críticos del sector.
+      </div>
+      <div class="q-nav">
+        <button class="btn btn-ghost" onclick="goTo('s1')">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Anterior
+        </button>
+        <button class="btn btn-primary" onclick="goTo('m1')" style="background-color: rgb(30, 114, 228)">
+          Siguiente
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PANTALLA 6 — STAGE 2 EJEMPLO I32 ═══════════════════ -->
+  <section class="screen" id="screen-s2" data-screen-label="06 Módulo 2 Likert I32">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-section">Módulo 2 · Contexto y transformación</span>
+        <span class="progress-count">70% completado</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:70%"></div></div>
+    </div>
+    <div class="q-wrap">
+      <div class="s2-intro">
+        <div class="s2-intro-title">Módulo 2 — Capacidades avanzadas</div>
+        <p class="s2-intro-body">Estas preguntas exploran las capacidades estratégicas, la innovación y la adaptación al contexto de tu restaurante. Son la base de las recomendaciones más profundas de tu guía personalizada.</p>
+      </div>
+      <div class="q-eyebrow">Módulo 2 · Contexto y transformación · Pregunta 12 de 12</div>
+      <p class="q-text">Este restaurante toma decisiones pensando en el largo plazo, considerando cambios del entorno y tendencias del sector.</p>
+      <div class="likert-opts">
+        <div class="likert-opt sel-no-s2" onclick="selectLikert(this)" style="border-color:var(--accent);background:var(--accent-bg)">
+          <span class="likert-num" style="color:var(--accent)">1</span>
+          <span class="likert-lbl" style="color:var(--accent)">Nunca</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">2</span>
+          <span class="likert-lbl">Pocas veces</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">3</span>
+          <span class="likert-lbl">A veces</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">4</span>
+          <span class="likert-lbl">Frecuentemente</span>
+        </div>
+        <div class="likert-opt" onclick="selectLikert(this)">
+          <span class="likert-num">5</span>
+          <span class="likert-lbl">Siempre</span>
+        </div>
+      </div>
+      <p class="q-hint" style="margin-bottom:24px">Pregunta final del diagnóstico</p>
+      <div class="q-nav">
+        <button class="btn btn-ghost" onclick="goTo('m1')">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Anterior
+        </button>
+        <button class="btn btn-primary" onclick="goTo('m2')" style="background-color: rgb(30, 114, 228)">
+          Finalizar diagnóstico
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PANTALLA 7 — MOMENTO 2: RESULTADOS FINALES ═══════════════════ -->
+  <section class="screen" id="screen-m2" data-screen-label="07 Momento 2 — Resultados finales">
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-section">Tu diagnóstico completo</span>
+        <span class="progress-count">100% completado</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+
+    <div class="m2-wrap">
+
+      <!-- BLOQUE 1 — Código SAG + Score -->
+      <div class="sag-card">
+        <div class="sag-tex"></div>
+        <div class="sag-eyebrow">Tu código de acceso</div>
+        <div class="sag-code">SAG-DEMO</div>
+        <p class="sag-instruction">Guarda este código. Lo necesitas para acceder a tu guía personalizada.</p>
+        <button class="btn btn-ghost" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2);font-size:13px;padding:8px 18px;position:relative;margin-bottom:4px" onclick="navigator.clipboard&&navigator.clipboard.writeText('SAG-DEMO')">
+          ⎘ Copiar código
+        </button>
+        <hr class="sag-divider">
+        <div class="sag-score">2.61</div>
+        <div style="position:relative;margin-top:10px">
+          <span class="maturity-badge">Nivel 2 — Desarrollo</span>
+        </div>
+        <p class="sag-desc">El aprendizaje existe en tu restaurante pero no se retiene. Con acciones consistentes en los próximos 3–6 meses, este establecimiento puede alcanzar el nivel Consolidación.</p>
+      </div>
+
+      <!-- BLOQUE 2 — Radar D1–D8 -->
+      <h2 class="section-head">Tu perfil por dimensión — Módulo 1 y 2</h2>
+      <div class="chart-wrap">
+        <canvas id="radar-m2" style="max-height:340px"></canvas>
+      </div>
+
+      <!-- BLOQUE 3 — Niveles de análisis -->
+      <h2 class="section-head">Resultados por nivel de análisis</h2>
+      <div class="levels-card">
+        <div class="level-row">
+          <span class="level-name">Individual</span>
+          <div class="level-track"><div class="level-fill" style="width:65%;background:var(--amber)"></div></div>
+          <span class="level-score" style="color:var(--amber)">3.25</span>
+          <span class="level-badge badge-medio">Medio →</span>
+        </div>
+        <div class="level-row">
+          <span class="level-name">Grupal</span>
+          <div class="level-track"><div class="level-fill" style="width:57.6%;background:var(--amber)"></div></div>
+          <span class="level-score" style="color:var(--amber)">2.88</span>
+          <span class="level-badge badge-medio">Medio →</span>
+        </div>
+        <div class="level-row hl">
+          <span class="level-name" style="color:var(--red)">Organizacional</span>
+          <div class="level-track"><div class="level-fill" style="width:32.6%;background:var(--red)"></div></div>
+          <span class="level-score" style="color:var(--red)">1.63</span>
+          <span class="level-badge badge-bajo">Bajo ⬇</span>
+        </div>
+        <div class="level-row">
+          <span class="level-name">Estratégico</span>
+          <div class="level-track"><div class="level-fill" style="width:50%;background:var(--amber)"></div></div>
+          <span class="level-score" style="color:var(--amber)">2.50</span>
+          <span class="level-badge badge-medio">Medio →</span>
+        </div>
+        <div class="m2-insight">
+          <span style="font-weight:700;flex-shrink:0">!</span>
+          <span>El nivel <strong>Organizacional (1.63)</strong> es el más débil de tu diagnóstico. Esto significa que el conocimiento no está siendo retenido por el restaurante como sistema. Es el punto de intervención más urgente.</span>
+        </div>
+      </div>
+
+      <!-- BLOQUE 4 — Top 3 recomendaciones -->
+      <h2 class="section-head">Tus recomendaciones prioritarias</h2>
+
+      <div class="m2-rec-card brecha">
+        <div class="m2-rec-badge"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.18em;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Brecha · Aprendizaje y conocimiento</div>
+        <h3 class="m2-rec-title">Tu equipo aprende, pero el restaurante no retiene ese aprendizaje.</h3>
+        <p class="m2-rec-body">En Aprendizaje organizacional y Gestión del conocimiento, el nivel individual es significativamente más alto que el nivel organizacional. Esto significa que el conocimiento vive en las personas — cuando alguien se va, ese conocimiento se va con ellas.<br><br>Esta es la brecha más frecuente en los restaurantes de Popayán: el <strong>67% de los establecimientos</strong> diagnosticados presenta este patrón.</p>
+        <div class="m2-rec-action">
+          <div class="m2-rec-action-lbl"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.12em;margin-right:5px"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>Acción en 30 días</div>
+          <div class="m2-rec-action-text">Sesión de captura de conocimiento — reunir al equipo en 3 momentos de 30 minutos para documentar lo que saben y no está escrito. Cada persona aporta al menos 2 cosas.</div>
+        </div>
+      </div>
+
+      <div class="m2-rec-card">
+        <div class="m2-rec-badge">D8 · Contexto y transformación · Bajo</div>
+        <h3 class="m2-rec-title">No hay sistemas para monitorear el entorno. Las decisiones se toman sin información del mercado ni de la competencia.</h3>
+        <p class="m2-rec-body">Un radar de entorno de 3 fuentes simples revisado mensualmente cambia eso sin sofisticación tecnológica.</p>
+        <div class="m2-rec-action">
+          <div class="m2-rec-action-lbl"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.12em;margin-right:5px"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>Acción en 30 días</div>
+          <div class="m2-rec-action-text">Implementar el radar de entorno mensual — revisar reseñas de competidores en Google, redes del sector gastronómico de Popayán, y una publicación del sector. 30 minutos al mes.</div>
+        </div>
+      </div>
+
+      <div class="m2-rec-card">
+        <div class="m2-rec-badge">D5 · Desempeño organizacional · Bajo</div>
+        <h3 class="m2-rec-title">No hay indicadores formales de desempeño.</h3>
+        <p class="m2-rec-body">Elegir UN indicador y medirlo cada semana durante 2 meses es más valioso que elegir diez y medir ninguno. El hábito importa más que la métrica elegida.</p>
+        <div class="m2-rec-action">
+          <div class="m2-rec-action-lbl"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.12em;margin-right:5px"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>Acción en 30 días</div>
+          <div class="m2-rec-action-text">Elegir UN indicador del negocio y medirlo cada semana durante 2 meses — ventas del día, número de clientes, o calificación en plataformas. El que sea más fácil de medir.</div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 5 — CTA guia.html -->
+      <div class="cta-card">
+        <div class="cta-eyebrow">Tu guía personalizada está lista</div>
+        <h3 class="cta-title">Accede a tu plan de acción completo con tu código SAG-DEMO</h3>
+        <p class="cta-body">Tu guía incluye recomendaciones profundas para cada dimensión, planes de acción a 30 y 90 días, y recursos específicos para tu rol como Chef / Jefe de cocina en La Antigua.</p>
+        <div class="cta-button">
+          <input type="text" class="input-field" value="SAG-DEMO" style="margin-bottom:12px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;letter-spacing:.08em" readonly />
+          <a href="guia.html" class="btn btn-primary btn-lg btn-full" style="background-color: rgb(30, 114, 228)">
+            Ir a mi guía personalizada
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-ghost" onclick="goTo('s2')">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Volver
+        </button>
+        <button class="btn btn-ghost" onclick="goTo('welcome')">
+          Nuevo diagnóstico
+        </button>
       </div>
 
     </div>
@@ -1069,7 +1438,8 @@
           break;
       }
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${inner}</svg>`;
-      return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;    }
+      return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+    }
 
     function applyPattern(){
       const root = document.documentElement;
@@ -1265,18 +1635,95 @@
     applyTexture();
     syncUi();
 
+    /* ────────── INTERACCIÓN PREGUNTAS ────────── */
+    function selectCtx(el){
+      el.closest('.ctx-opts').querySelectorAll('.ctx-opt').forEach(function(o){ o.classList.remove('sel'); });
+      el.classList.add('sel');
+    }
+    function selectLikert(el){
+      el.closest('.likert-opts').querySelectorAll('.likert-opt').forEach(function(o){
+        o.classList.remove('sel');
+        o.style.borderColor = '';
+        o.style.background = '';
+        o.querySelector('.likert-num').style.color = '';
+        o.querySelector('.likert-lbl').style.color = '';
+      });
+      el.classList.add('sel');
+    }
+    function selectBinary(el, type){
+      var opts = el.closest('.binary-opts').querySelectorAll('.binary-opt');
+      opts.forEach(function(o){ o.classList.remove('sel-yes','sel-no'); });
+      el.classList.add(type === 'yes' ? 'sel-yes' : 'sel-no');
+    }
+
     /* ────────── SCREEN ROUTING ────────── */
+    var radarM2Initialized = false;
     function goTo(screenId){
       document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
       var el = document.getElementById('screen-' + screenId);
       if(el){ el.classList.add('active'); }
       var ctx = {
         welcome: 'Diagnóstico organizacional',
-        m1:      'Resultados del Módulo 1'
+        c1:      'Sobre tu restaurante',
+        s1:      'Módulo 1 · Aprendizaje organizacional',
+        s1b:     'Módulo 1 · Gestión del conocimiento',
+        m1:      'Resultados del Módulo 1',
+        s2:      'Módulo 2 · Contexto y transformación',
+        m2:      'Tu diagnóstico completo'
       };
       var t = document.getElementById('topbar-context');
       if(t && ctx[screenId]) t.textContent = ctx[screenId];
       window.scrollTo({top:0, behavior:'instant'});
+      if(screenId === 'm2' && !radarM2Initialized){ initRadarM2(); radarM2Initialized = true; }
+    }
+
+    /* ────────── RADAR MOMENTO 2 ────────── */
+    function initRadarM2(){
+      var ctx = document.getElementById('radar-m2');
+      if(!ctx) return;
+      new Chart(ctx, {
+        type:'radar',
+        data:{
+          labels:['D1 · Aprendizaje','D2 · Conocimiento','D3 · Capital humano','D4 · Cultura','D5 · Desempeño','D6 · Estrategia','D7 · Innovación','D8 · Contexto'],
+          datasets:[{
+            label:'Tu perfil',
+            data:[2.80, 2.50, 3.00, 3.00, 2.30, 2.75, 2.50, 2.00],
+            fill:true,
+            backgroundColor:'rgba(30,114,228,0.12)',
+            borderColor:'rgb(30,114,228)',
+            borderWidth:2,
+            pointBackgroundColor:'rgb(30,114,228)',
+            pointBorderColor:'#fff',
+            pointBorderWidth:1.5,
+            pointRadius:4,
+            pointHoverRadius:6
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            tooltip:{
+              backgroundColor:'#1a1a24',
+              titleFont:{family:'DM Sans',size:12,weight:'600'},
+              bodyFont:{family:'DM Sans',size:12},
+              padding:10,
+              displayColors:false,
+              callbacks:{label:function(c){ return c.formattedValue + ' / 5.0'; }}
+            }
+          },
+          scales:{
+            r:{
+              min:0,max:5,
+              ticks:{stepSize:1,backdropColor:'transparent',color:'#909098',font:{family:'JetBrains Mono',size:10}},
+              grid:{color:'#e2e2e8'},
+              angleLines:{color:'#e2e2e8'},
+              pointLabels:{color:'#4a4a5a',font:{family:'DM Sans',size:11,weight:'500'}}
+            }
+          }
+        }
+      });
     }
     document.querySelectorAll('[data-go]').forEach(function(el){
       el.addEventListener('click', function(e){
