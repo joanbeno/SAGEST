@@ -197,21 +197,7 @@
     @media(max-width:768px){.chart-wm{display:none}}
 
 
-    /* ── Logo fondo animado ── */
-    #welcome-bg-logo{
-      position:fixed;left:-3%;top:50%;transform:translateY(-50%);
-      height:88vh;width:auto;opacity:0;pointer-events:none;z-index:0;user-select:none;
-    }
-    #welcome-bg-logo.logo-in{animation:logoAppear .9s cubic-bezier(.4,0,.2,1) forwards}
-    #welcome-bg-logo.logo-static{opacity:.08}
-    #welcome-bg-logo.logo-out{transition:opacity .6s ease;opacity:0!important}
-    @keyframes logoAppear{
-      from{opacity:0;transform:translateY(-50%) translateX(-18px)}
-      to{opacity:.08;transform:translateY(-50%) translateX(0)}
-    }
-    @media(max-width:768px){#welcome-bg-logo{display:none}}
-
-    @media (max-width:640px){
+@media (max-width:640px){
       .topbar{padding:0 16px}
       .g0-grid{grid-template-columns:1fr}
       .perfil-card{grid-template-columns:1fr}
@@ -223,6 +209,8 @@
   </style>
 </head>
 <body>
+
+  
 
   <img id="welcome-bg-logo" src="logo_sagest_no_texto.jpeg" alt="" aria-hidden="true" />
 
