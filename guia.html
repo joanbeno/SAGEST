@@ -499,11 +499,17 @@
 
   <script>
 
-    /* ── Logo aparece al cargar ── */
-    setTimeout(function(){
+    /* ── Logo aparece al cargar (doble rAF fuerza repaint inicial) ── */
+    (function(){
       var logo = document.getElementById('welcome-bg-logo');
-      if(logo) logo.classList.add('logo-static');
-    }, 80);
+      if(!logo) return;
+      requestAnimationFrame(function(){
+        logo.getBoundingClientRect(); /* fuerza pintura del opacity:0 */
+        requestAnimationFrame(function(){
+          logo.classList.add('logo-static');
+        });
+      });
+    })();
 
     /* ── ENTRADA CON CÓDIGO ── */
     function enterCode(){
