@@ -27,7 +27,7 @@
       /* Superficies */
       --bg:#f5f5f7;
       --bg-card:#ffffff;
-      --surface-inv:#1a1a24;
+      --surface-inv:#1c2335;
       --surface-inv-2:#23232f;
       /* Texto */
       --ink:#0a0a12;
@@ -694,17 +694,49 @@
     /* ────────── MOMENTO 2 ────────── */
     #screen-m2{padding-bottom:120px}
     .m2-wrap{max-width:880px;margin:0 auto;padding:32px 24px 0}
-    .sag-card{background:var(--surface-inv);color:#fff;border-radius:var(--radius);padding:34px 38px;margin-bottom:32px;position:relative;overflow:hidden;text-align:center}
-    .sag-card::before{content:'';position:absolute;top:-40%;right:-10%;width:60%;height:180%;background:radial-gradient(ellipse at center,rgba(193,68,14,.12),transparent 60%);pointer-events:none}
-    .sag-tex{position:absolute;top:0;right:0;bottom:0;width:65%;background-image:url('texture-halftone-inv.png');background-size:cover;background-position:right center;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 42%);mask-image:linear-gradient(to right,transparent 0%,black 42%);opacity:.45;mix-blend-mode:screen;pointer-events:none}
-    .sag-eyebrow{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px;position:relative}
-    .sag-code{font-family:'DM Serif Display',serif;font-size:48px;font-style:italic;color:var(--ocre);letter-spacing:.15em;margin-bottom:10px;position:relative}
-    .sag-instruction{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px;position:relative}
-    .sag-divider{border:none;border-top:1px solid rgba(255,255,255,.12);margin:20px 0;position:relative}
-    .sag-score{font-family:'DM Serif Display',serif;font-size:52px;color:var(--ocre);line-height:1;position:relative}
-    .sag-desc{font-size:13px;color:rgba(255,255,255,.6);max-width:480px;margin:12px auto 0;line-height:1.6;position:relative}
-    .chart-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px}
+
+    /* ── sag-card: estilo horizontal como maturity-card ── */
+    .sag-card{
+      background-color:var(--surface-inv);
+      background-image:var(--pattern-url-dark);
+      background-size:var(--pattern-size) var(--pattern-size);
+      color:#fff;border-radius:var(--radius);padding:34px 38px;
+      margin-bottom:20px;position:relative;overflow:hidden;
+    }
+    .sag-card::before{content:'';position:absolute;top:-40%;right:-10%;width:60%;height:180%;background:radial-gradient(ellipse at center,rgba(193,68,14,.10),transparent 60%);pointer-events:none}
+    .sag-card::after{content:'';position:absolute;top:0;right:0;bottom:0;width:65%;background-image:url('texture-halftone-inv.png');background-size:cover;background-position:right center;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 42%);mask-image:linear-gradient(to right,transparent 0%,black 42%);opacity:calc(0.45 * var(--tex-enabled));mix-blend-mode:screen;pointer-events:none}
+
+    /* ── access-card: llave de acceso + WhatsApp ── */
+    .access-card{background:var(--surface-inv);border-radius:var(--radius);margin-bottom:28px;overflow:hidden;position:relative}
+    .access-card::after{content:'';position:absolute;top:0;right:0;bottom:0;width:60%;background-image:url('texture-halftone-inv.png');background-size:cover;background-position:right center;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 42%);mask-image:linear-gradient(to right,transparent 0%,black 42%);opacity:calc(0.3 * var(--tex-enabled));mix-blend-mode:screen;pointer-events:none}
+    .access-top{display:flex;align-items:center;gap:8px;padding:13px 20px;border-bottom:1px solid rgba(255,255,255,.08);position:relative}
+    .access-dot{width:8px;height:8px;border-radius:50%;background:rgb(30,114,228);flex-shrink:0}
+    .access-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+    .access-body{display:flex;align-items:center;gap:14px;padding:20px;flex-wrap:wrap;position:relative}
+    .access-plate{background:#fff;border-radius:8px;padding:11px 18px;cursor:pointer;transition:.15s ease;flex-shrink:0}
+    .access-plate:hover{background:#f0f0f8;transform:scale(1.02)}
+    .access-plate-code{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:500;color:#0a0a12;letter-spacing:.1em}
+    .access-copy-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;flex-shrink:0}
+    .access-copy-btn:hover{background:rgba(255,255,255,.18)}
+    .access-copy-btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;flex-shrink:0}
+    .access-right{flex:1;min-width:200px}
+    .access-desc{font-size:13px;color:rgba(255,255,255,.58);line-height:1.55;margin-bottom:12px}
+    .wa-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:12px 20px;background:#25D366;border:none;border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;width:100%}
+    .wa-btn:hover{background:#20bc5a}
+    .wa-btn svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
+
+    /* ── WhatsApp float ── */
+    .wa-float{position:fixed;bottom:24px;right:24px;width:54px;height:54px;background:#25D366;border-radius:50%;display:none;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.45);z-index:150;text-decoration:none;transition:.2s}
+    .wa-float.vis{display:flex}
+    .wa-float:hover{background:#20bc5a;transform:scale(1.08)}
+    .wa-float svg{width:28px;height:28px;fill:#fff}
+
+    /* ── Chart watermark (solo desktop) ── */
+    .chart-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px;position:relative}
     .chart-wrap canvas{max-height:340px}
+    .chart-wm{position:absolute;bottom:14px;right:16px;pointer-events:none;opacity:.07;filter:grayscale(1)}
+    .chart-wm img{height:18px;width:auto;display:block}
+    @media(max-width:768px){.chart-wm{display:none}}
     .levels-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:32px}
     .level-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
     .level-row:last-of-type{border-bottom:none}
@@ -1176,27 +1208,46 @@
 
     <div class="m2-wrap">
 
-      <!-- BLOQUE 1 — Código SAG + Score -->
+      <!-- BLOQUE 1 — Score (estilo maturity-card) -->
       <div class="sag-card">
-        <div class="sag-tex"></div>
-        <div class="sag-eyebrow">Tu código de acceso</div>
-        <div class="sag-code">SAG-DEMO</div>
-        <p class="sag-instruction">Guarda este código. Lo necesitas para acceder a tu guía personalizada.</p>
-        <button class="btn btn-ghost" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2);font-size:13px;padding:8px 18px;position:relative;margin-bottom:4px" onclick="navigator.clipboard&&navigator.clipboard.writeText('SAG-DEMO')">
-          ⎘ Copiar código
-        </button>
-        <hr class="sag-divider">
-        <div class="sag-score">2.61</div>
-        <div style="position:relative;margin-top:10px">
-          <span class="maturity-badge">Nivel 2 — Desarrollo</span>
+        <div class="maturity-eyebrow">Tu nivel de desarrollo organizacional</div>
+        <div class="maturity-row">
+          <span class="maturity-score">2.61</span>
+          <span class="maturity-of">de 5.0</span>
         </div>
-        <p class="sag-desc">El aprendizaje existe en tu restaurante pero no se retiene. Con acciones consistentes en los próximos 3–6 meses, este establecimiento puede alcanzar el nivel Consolidación.</p>
+        <div class="maturity-badge">Nivel 2 — Desarrollo</div>
+        <p class="maturity-desc">El aprendizaje existe en tu restaurante pero no se retiene. Con acciones consistentes en los próximos 3–6 meses, este establecimiento puede alcanzar el nivel Consolidación.</p>
+      </div>
+
+      <!-- BLOQUE 1b — Llave de acceso + WhatsApp -->
+      <div class="access-card">
+        <div class="access-top">
+          <span class="access-dot"></span>
+          <span class="access-label">Tu llave de acceso personal</span>
+        </div>
+        <div class="access-body">
+          <div class="access-plate" onclick="copiarCodigo()" title="Clic para copiar">
+            <div class="access-plate-code">SAG-DEMO</div>
+          </div>
+          <button class="access-copy-btn" onclick="copiarCodigo()">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar
+          </button>
+          <div class="access-right">
+            <p class="access-desc">Guárdalo en un lugar seguro. Con este código recuperas tu diagnóstico y lo compartes con el facilitador.</p>
+            <button class="wa-btn" onclick="openWhatsApp()">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              Enviar al facilitador
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- BLOQUE 2 — Radar D1–D8 -->
       <h2 class="section-head">Tu perfil por dimensión — Módulo 1 y 2</h2>
       <div class="chart-wrap">
         <canvas id="radar-m2" style="max-height:340px"></canvas>
+        <div class="chart-wm"><img src="sagest-logo.png" alt="SAGEST" /></div>
       </div>
 
       <!-- BLOQUE 3 — Niveles de análisis -->
@@ -1731,7 +1782,33 @@
         goTo(el.getAttribute('data-go'));
       });
     });
+
+    /* ── WhatsApp ── */
+    var WA_NUM = '573014003612';
+    function openWhatsApp(){
+      var code = 'SAG-DEMO';
+      var msg = 'Hola, acabo de completar el diagnóstico SAGEST. Mi código es: *' + code + '*. Quedo pendiente de la sesión.';
+      window.open('https://wa.me/' + WA_NUM + '?text=' + encodeURIComponent(msg), '_blank');
+    }
+    function copiarCodigo(){
+      if(navigator.clipboard) navigator.clipboard.writeText('SAG-DEMO');
+      var btn = document.querySelector('.access-copy-btn');
+      if(btn){ var orig = btn.innerHTML; btn.textContent = '¡Copiado!'; setTimeout(function(){ btn.innerHTML = orig; }, 1800); }
+    }
+
+    /* ── Mostrar/ocultar botón flotante WhatsApp según pantalla ── */
+    var _origGoTo = goTo;
+    goTo = function(screenId){
+      _origGoTo(screenId);
+      var fab = document.getElementById('wa-fab');
+      if(fab) fab.classList.toggle('vis', screenId === 'm2');
+    };
   </script>
+
+  <!-- WhatsApp flotante -->
+  <a id="wa-fab" class="wa-float" onclick="openWhatsApp()" href="javascript:void(0)" title="Enviar al facilitador por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+  </a>
 
 </body>
 </html>

@@ -12,7 +12,7 @@
     :root{
       --bg:#f5f5f7;
       --bg-card:#ffffff;
-      --surface-inv:#1a1a24;
+      --surface-inv:#1c2335;
       --ink:#0a0a12;
       --ink-soft:#4a4a5a;
       --ink-muted:#909098;
@@ -354,6 +354,16 @@
     .detail-quote{font-size:13px;color:var(--ink-soft);line-height:1.65;font-style:italic;border-left:3px solid var(--border);padding-left:12px;margin-bottom:10px}
     .detail-notes{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-soft);resize:vertical;min-height:64px}
 
+    /* ── NAV MÓVIL ── */
+    .mobile-tabs{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);z-index:115;justify-content:stretch}
+    .mobile-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 10px;font-size:10px;font-weight:500;color:var(--ink-muted);cursor:pointer;border:none;background:none;font-family:inherit;transition:var(--t)}
+    .mobile-tab.active{color:var(--accent)}
+    .mobile-tab svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    /* ── Chart watermark ── */
+    .chart-card{position:relative}
+    .chart-wm{position:absolute;bottom:14px;right:16px;pointer-events:none;opacity:.06;filter:grayscale(1)}
+    .chart-wm img{height:18px;width:auto;display:block}
+    @media(max-width:768px){.chart-wm{display:none}}
     /* ── RESPONSIVE ── */
     @media (max-width:1100px){
       .metrics{grid-template-columns:repeat(2, 1fr)}
@@ -362,10 +372,11 @@
     @media (max-width:680px){
       .topbar{padding:0 16px}
       .topbar-logo-suffix, .topbar-nav{display:none}
-      .page{padding:120px 16px 60px}
+      .page{padding:120px 16px 80px}
       .metrics{grid-template-columns:1fr 1fr}
       .bar-label{width:100px; font-size:13px}
       .bar-badge{display:none}
+      .mobile-tabs{display:flex}
     }
   </style>
 </head>
@@ -479,6 +490,7 @@
         </div>
         <div class="chart-body">
           <canvas id="radar-grupo"></canvas>
+          <div class="chart-wm"><img src="sagest-logo.png" alt="SAGEST" /></div>
         </div>
       </div>
 
@@ -534,7 +546,7 @@
         <div class="bar-label">Individual</div>
         <div class="bar-track-wrap">
           <div class="bar-track">
-            <div class="bar-fill" style="width:62%; background:var(--amber)"></div>
+            <div class="bar-fill" style="width:62%; background:rgb(146,52,10)"></div>
           </div>
           <span class="bar-score">3.10</span>
           <span class="bar-badge metric-badge badge-medio">● Medio</span>
@@ -545,7 +557,7 @@
         <div class="bar-label">Grupal</div>
         <div class="bar-track-wrap">
           <div class="bar-track">
-            <div class="bar-fill" style="width:56.2%; background:var(--amber)"></div>
+            <div class="bar-fill" style="width:56.2%; background:rgb(76,146,10)"></div>
           </div>
           <span class="bar-score">2.81</span>
           <span class="bar-badge metric-badge badge-medio">● Medio</span>
@@ -567,7 +579,7 @@
         <div class="bar-label">Estratégico</div>
         <div class="bar-track-wrap">
           <div class="bar-track">
-            <div class="bar-fill" style="width:52%; background:var(--amber)"></div>
+            <div class="bar-fill" style="width:52%; background:rgb(10,146,146)"></div>
           </div>
           <span class="bar-score">2.60</span>
           <span class="bar-badge metric-badge badge-medio">● Medio</span>
@@ -944,8 +956,10 @@
     function showPanel(id, navEl){
       document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
       document.getElementById('panel-' + id).classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+      document.querySelectorAll('.nav-item,.mobile-tab').forEach(function(n){ n.classList.remove('active'); });
       if(navEl) navEl.classList.add('active');
+      /* sync mobile tab */
+      document.querySelectorAll('.mobile-tab[data-panel="' + id + '"]').forEach(function(t){ t.classList.add('active'); });
       window.scrollTo({top:0, behavior:'instant'});
     }
 
@@ -958,6 +972,23 @@
       if(!isOpen) row.classList.add('open');
     }
   </script>
+
+
+  <!-- Navegación móvil (bottom tabs) -->
+  <nav class="mobile-tabs" id="mobile-tabs">
+    <button class="mobile-tab active" data-panel="dashboard" onclick="showPanel('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </button>
+    <button class="mobile-tab" data-panel="hallazgos" onclick="showPanel('hallazgos',this)">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Hallazgos
+    </button>
+    <button class="mobile-tab" data-panel="encuestados" onclick="showPanel('encuestados',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Encuestados
+    </button>
+  </nav>
 
 </body>
 </html>
