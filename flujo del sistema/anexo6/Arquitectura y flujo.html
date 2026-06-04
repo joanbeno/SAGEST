@@ -45,6 +45,7 @@
         <li><a href="#s7">Modulación por rol</a></li>
         <li><a href="#s8">Blueprint del flujo</a></li>
         <li><a href="#s9">Glosario y referencias</a></li>
+        <li><a href="#s10">Stack tecnológico</a></li>
       </ol>
     </nav>
 
@@ -159,6 +160,33 @@
         <p>Nonaka, I., y Takeuchi, H. (1995). <em>The knowledge creating company.</em></p>
         <p>Senge, P. (1990). <em>The fifth discipline.</em></p>
         <p>Teece, D. (2007). Explicating dynamic capabilities.</p>
+      </div>
+    </section>
+
+    <section id="s10">
+      <p class="num">10</p>
+      <h2 class="sec">Stack tecnológico</h2>
+      <p class="lead-sm">Nota técnica de <strong>Fixoria</strong> — estudio de desarrollo detrás de SAGEST.</p>
+      <p>El sistema se construyó con un stack deliberadamente mínimo: HTML5, CSS3 y JavaScript sin dependencias externas ni frameworks de terceros. La decisión responde a tres criterios: portabilidad total, tiempo de carga cercano a cero y capacidad de operar sin conexión a internet en condiciones de campo.</p>
+
+      <h3>Frontend</h3>
+      <div class="fieldgrid">
+        <div class="row"><div class="k">Lenguaje</div><div class="v">HTML5 semántico, CSS3 con variables nativas (<span class="mono">custom properties</span>) y JavaScript ES2020 vanilla. Sin transpiladores ni bundlers.</div></div>
+        <div class="row"><div class="k">Diseño visual</div><div class="v">Sistema de diseño propio con tipografía IBM Plex Sans e IBM Plex Mono. Paleta derivada del manual de identidad SAGEST. Sin librerías UI.</div></div>
+        <div class="row"><div class="k">Interactividad</div><div class="v">Motor de scoring, algoritmo de priorización y renderizado de la guía implementados íntegramente en el cliente. Sin llamadas a servidor durante el flujo de diagnóstico.</div></div>
+        <div class="row"><div class="k">Persistencia</div><div class="v"><span class="mono">localStorage</span> para guardar respuestas entre sesiones y vincular el código <span class="mono">SAG-XXXX</span> con su perfil de scores.</div></div>
+        <div class="row"><div class="k">Visualización</div><div class="v">Gráficos SVG generados en tiempo real. Radar D1–D8 y donut de distribución construidos sin librerías de charting.</div></div>
+      </div>
+
+      <h3>Backend e infraestructura</h3>
+      <div class="fieldgrid">
+        <div class="row"><div class="k">Arquitectura</div><div class="v">Serverless estático. No existe servidor de aplicaciones ni base de datos centralizada en la versión actual. Todo el procesamiento ocurre en el navegador del usuario.</div></div>
+        <div class="row"><div class="k">Despliegue</div><div class="v">Vercel con entrega desde CDN global. El repositorio en GitHub dispara el despliegue automático en cada <span class="mono">push</span> a <span class="mono">main</span>.</div></div>
+        <div class="row"><div class="k">Control de versiones</div><div class="v">Git. Historial de cambios accesible en el repositorio público del proyecto.</div></div>
+      </div>
+
+      <div class="callout">
+        <p>La elección de un stack sin dependencias garantiza que el sistema pueda auditarse, modificarse y desplegarse por cualquier equipo técnico sin configuración de entorno. El código fuente es el artefacto final.</p>
       </div>
     </section>
 
