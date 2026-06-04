@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>SAGEST · Blueprint (respaldo estático)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="sagest.css">
+<style>
+  html,body{margin:0;background:#F2EEE6}
+  body{width:2730px;height:1700px}
+  .stage{position:relative;width:1840px;height:1440px;background:
+    radial-gradient(circle at 1px 1px, rgba(120,112,96,.10) 1px, transparent 0) 0 0/26px 26px, #F2EEE6;}
+  @page{size:1840px 1440px;margin:0}
+</style>
+</head>
+<body>
+<div class="stage"><div id="CACHEBUST" style="position:absolute;left:0;top:0;width:300px;height:120px;background:#ff0000;z-index:99999;color:#fff;font-size:40px">FRESH-XYZ</div>
+<div class="canvas" id="canvas">
+
+          <!-- etiquetas de carril -->
+          <div class="lane-label" style="left:680px;top:88px">Motor · procesos del sistema</div>
+          <div class="lane-label" style="left:150px;top:745px">Recorrido del usuario · guía</div>
+
+          <!-- ░░░ BANNERS ░░░ -->
+          <div class="banner b-blue" style="left:350px;top:10px;width:320px;height:36px">FASE 1 · DIAGNÓSTICO (D1 a D5)</div>
+          <div class="banner b-blue" style="left:470px;top:400px;width:250px;height:32px">FASE 2 · DIAGNÓSTICO (D6 a D8)</div>
+          <div class="banner b-purple" style="left:1080px;top:10px;width:500px;height:36px">MATRIZ DE RECOMENDACIONES · 111 BLOQUES</div>
+
+          <!-- ░░░ FASE 1 ░░░ -->
+          <div class="node n-screen" data-node="p2" style="left:400px;top:70px;width:220px">
+            <div class="node-title">Pantalla 2 · Contexto</div>
+            <div class="node-sub">Selección de rol del usuario</div>
+          </div>
+          <div class="node n-screen" data-node="p3" style="left:400px;top:160px;width:220px">
+            <div class="node-title">Pantalla 3 · Likert (1 a 5)</div>
+            <div class="node-sub">Ítems <span class="tok">D1</span> a <span class="tok">D5</span> · 13 preguntas</div>
+          </div>
+          <div class="node n-screen" data-node="p4" style="left:400px;top:280px;width:220px">
+            <div class="node-title">Pantalla 4 · Binario</div>
+            <div class="node-sub">¿Continuar con la Fase 2?</div>
+          </div>
+          <div class="node n-output" data-node="p5" style="left:150px;top:255px;width:220px">
+            <div class="cat">Pantalla · resultado</div>
+            <div class="node-title">Pantalla 5 · Momento 1</div>
+            <div class="node-body">Muestra solo <span class="tok">rec_corta</span> de las dimensiones D1 a D5.</div>
+          </div>
+
+          <!-- ░░░ FASE 2 ░░░ -->
+          <div class="node n-screen" data-node="p6" style="left:460px;top:440px;width:220px">
+            <div class="node-title">Pantalla 6 · Módulo 2</div>
+            <div class="node-sub">Estratégico · ítems <span class="tok">D6 a D8</span> · 12 preguntas</div>
+          </div>
+          <div class="node n-output" data-node="p7" style="left:370px;top:580px;width:230px">
+            <div class="cat">Pantalla · resultado</div>
+            <div class="node-title">Pantalla 7 · Momento 2</div>
+            <div class="node-body">Muestra <span class="tok">rec_corta</span> D6 a D8 y genera el código <span class="tok">SAG-XXXX</span>.</div>
+          </div>
+
+          <!-- ░░░ MOTOR ░░░ -->
+          <div class="node n-process" data-node="scores" style="left:680px;top:110px;width:340px">
+            <div class="cat">Proceso del sistema</div>
+            <div class="node-title">Cálculo de scores integrado</div>
+            <div class="node-body">Procesa Fase 1 (D1 a D5) y Fase 2 (D6 a D8).<br>Score por dimensión, score por nivel y score global de 1.0 a 5.0.</div>
+          </div>
+          <div class="node n-gap" data-node="gaps" style="left:680px;top:380px;width:340px">
+            <div class="cat">Detección de brechas</div>
+            <div class="node-title">Detección de brechas</div>
+            <div class="node-body">Condición <span class="tok">IND = 2.4</span> y <span class="tok">ORG = 2.3</span>.<br>Activa <span class="tok">BRECHA-D1</span>, <span class="tok">BRECHA-D2</span> y <span class="tok">BRECHA-D3</span>.</div>
+          </div>
+          <div class="node n-role" data-node="roles" style="left:680px;top:500px;width:340px">
+            <div class="cat">Modulación por rol</div>
+            <div class="node-title">Modulación por rol</div>
+            <div class="node-body">Ajusta tono y contenido según el rol <span class="tok">c1</span>. Propietario, chef, cocinero, mesero y administrativo.</div>
+          </div>
+          <div class="node n-facil" data-node="facil" style="left:680px;top:632px;width:340px">
+            <div class="cat">Panel facilitador</div>
+            <div class="node-title">Panel facilitador · facilitador.html</div>
+            <div class="node-body">Acceso restringido. Dashboard, hallazgos del sector, tabla de encuestados y exportación CSV y PDF.</div>
+          </div>
+
+          <!-- ░░░ MATRIZ ░░░ -->
+          <div class="node n-matrix" data-node="m1" style="left:1080px;top:60px;width:500px">
+            <div class="node-title">Parte 1 · Niveles de madurez global</div>
+            <div class="node-sub">Exploración · Desarrollo · Consolidación · Liderazgo</div>
+          </div>
+          <div class="node n-matrix" data-node="m2" style="left:1080px;top:120px;width:500px">
+            <div class="node-title">Parte 2 · Bloques dimensionales (96)</div>
+            <div class="node-body">8 dimensiones × 4 niveles de análisis × 4 rangos de score.<br>D1 Aprendizaje · D2 Conocimiento · D3 Capital humano · D4 Cultura · D5 Desempeño · D6 Estrategia · D7 Innovación · D8 Contexto.</div>
+          </div>
+          <div class="node n-matrix" data-node="m3" style="left:1080px;top:235px;width:500px">
+            <div class="node-title">Parte 3 · Bloques de brecha (3)</div>
+            <div class="node-sub"><span class="tok">BRECHA-D1</span> · <span class="tok">BRECHA-D2</span> · <span class="tok">BRECHA-D3</span></div>
+          </div>
+          <div class="node n-matrix" data-node="m4" style="left:1080px;top:300px;width:500px">
+            <div class="node-title">Parte 4 · Modulación por rol (5)</div>
+            <div class="node-sub">Propietario · Chef · Cocinero · Mesero · Administrativo</div>
+          </div>
+          <div class="node n-matrix" data-node="m5" style="left:1080px;top:365px;width:500px">
+            <div class="node-title">Parte 5 · Contenido transversal</div>
+            <div class="node-sub">Introducción · Glosario (8) · Preguntas frecuentes (20)</div>
+          </div>
+          <div class="node n-matrix" data-node="mstruct" style="left:1080px;top:430px;width:500px">
+            <div class="cat">Estructura</div>
+            <div class="node-title">Estructura de cada bloque</div>
+            <div class="node-body"><span class="tok">rec_corta</span> → m1 y m2 &nbsp;·&nbsp; <span class="tok">rec_profunda</span> → guía<br><span class="tok">accion_30d</span> y <span class="tok">accion_90d</span> → plan de acción &nbsp;·&nbsp; <span class="tok">recurso</span> y <span class="tok">biblio</span> → apoyo</div>
+          </div>
+          <div class="node n-matrix" data-node="algo" style="left:1080px;top:580px;width:500px">
+            <div class="cat">Lógica del motor</div>
+            <div class="node-title">Algoritmo de priorización</div>
+            <div class="node-body">Selecciona el top 5 de bloques para la guía. Antepone brechas, luego el nivel organizacional más bajo y la dimensión con menor score, y cierra con una recomendación estratégica.</div>
+          </div>
+          <div class="node n-guide" data-node="gen" style="left:1080px;top:720px;width:500px">
+            <div class="cat">Guía personalizada</div>
+            <div class="node-title">Generación de la guía</div>
+            <div class="node-body">Ensambla perfil y radar D1 a D8, las cinco recomendaciones profundas, el plan de acción y el material de apoyo.</div>
+          </div>
+
+          <!-- ░░░ GUÍA · PANTALLAS ░░░ -->
+          <div class="node n-guide" data-node="g0" style="left:400px;top:775px;width:240px">
+            <div class="node-title">Pantalla G0 · Entrada a la guía</div>
+            <div class="node-sub">Ingreso del código <span class="tok">SAG-XXXX</span></div>
+          </div>
+
+          <div class="diamond" data-node="dValid" style="left:460px;top:875px;width:120px;height:70px">
+            <div class="di"></div>
+            <div class="dt">¿Código<br>válido?</div>
+          </div>
+
+          <div class="node n-gap" data-node="invalid" style="left:660px;top:898px;width:150px">
+            <div class="node-title">Código inválido</div>
+          </div>
+
+          <div class="node n-guide" data-node="g1" style="left:400px;top:1000px;width:240px">
+            <div class="node-title">Pantalla G1 · Guía desplegada</div>
+            <div class="node-body"><span class="tok">rec_profunda</span> por dimensión · plan de acción a 30 y 90 días · recursos y bibliografía.</div>
+          </div>
+
+          <div class="diamond" data-node="dWhats" style="left:460px;top:1130px;width:120px;height:70px">
+            <div class="di"></div>
+            <div class="dt">¿Consultar<br>WhatsApp?</div>
+          </div>
+
+          <div class="node n-green" data-node="whatsapp" style="left:430px;top:1270px;width:180px;text-align:center">
+            <div class="node-title">WhatsApp · Asesor SAGEST</div>
+          </div>
+
+          <div class="node n-green" data-node="finuser" style="left:150px;top:1150px;width:150px;text-align:center">
+            <div class="node-title">Fin del usuario</div>
+          </div>
+
+          <!-- ░░░ NOTAS ░░░ -->
+          <div class="note np" data-node="artic" style="left:10px;top:370px;width:330px">
+            <div class="nt">Articulación clave</div>
+            <div class="nb">La matriz de 111 bloques es el único repositorio de contenido. De ella salen las respuestas cortas de m1 y m2 y también las respuestas profundas y el plan de acción de la guía.</div>
+          </div>
+          <div class="note na" data-node="contenido" style="left:10px;top:490px;width:330px">
+            <div class="nt">Contenido de cada bloque</div>
+            <div class="nb"><span class="tok">rec_corta</span> → m1 y m2 &nbsp;·&nbsp; <span class="tok">rec_profunda</span> → guía &nbsp;·&nbsp; <span class="tok">accion_30d</span> y <span class="tok">accion_90d</span> → plan &nbsp;·&nbsp; <span class="tok">recurso</span> y <span class="tok">biblio</span> → apoyo</div>
+          </div>
+          <div class="note na" data-node="demo" style="left:10px;top:600px;width:330px">
+            <div class="nt">Modo demo</div>
+            <div class="nb">El código <span class="tok">SAG-DEMO</span> abre la guía sin diagnóstico real. En producción cada <span class="tok">SAG-XXXX</span> activa los scores reales del restaurante.</div>
+          </div>
+
+          <!-- ░░░ FLECHAS ░░░ -->
+          <svg class="arrows" width="1840" height="1440" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </marker>
+            </defs>
+
+            <!-- Fase 1 -->
+            <g class="edge flow" data-from="p2" data-to="p3"><line class="ln" x1="510" y1="120" x2="510" y2="158" marker-end="url(#arr)"></line></g>
+            <g class="edge flow" data-from="p3" data-to="p4"><line class="ln" x1="510" y1="212" x2="510" y2="278" marker-end="url(#arr)"></line><text class="elabel" x="516" y="248">Siguiente</text></g>
+            <g class="edge data" data-from="p3" data-to="scores"><path class="ln" d="M620 195 L650 195 L650 155 L678 155" marker-end="url(#arr)"></path><text class="elabel" x="636" y="190">datos D1 a D5</text></g>
+            <g class="edge data" data-from="p2" data-to="roles"><path class="ln" d="M620 95 L960 95 L960 500" marker-end="url(#arr)"></path><text class="elabel" x="772" y="90">rol seleccionado</text></g>
+            <g class="edge data" data-from="p3" data-to="p5"><path class="ln" d="M400 300 L350 300 L350 305 L372 305" marker-end="url(#arr)"></path><text class="elabel" x="300" y="295">rec_corta D1 a D5</text></g>
+
+            <!-- Fase 2 -->
+            <g class="edge flow" data-from="p4" data-to="p6"><path class="ln" d="M445 330 L445 466 L458 466" marker-end="url(#arr)"></path><text class="elabel" x="360" y="452">Continuar</text></g>
+            <g class="edge data" data-from="p6" data-to="scores"><path class="ln" d="M682 465 L750 465 L750 200 L678 200" marker-end="url(#arr)"></path><text class="elabel" x="708" y="442">datos D6 a D8</text></g>
+            <g class="edge flow" data-from="p6" data-to="p7"><path class="ln" d="M560 490 L540 540 L500 540 L500 578" marker-end="url(#arr)"></path><text class="elabel" x="505" y="536">Finalizar</text></g>
+
+            <!-- Motor -->
+            <g class="edge flow" data-from="scores" data-to="gaps"><path class="ln" d="M1020 212 L1020 360 L850 360 L850 378" marker-end="url(#arr)"></path><text class="elabel" x="1026" y="300">evalúa</text></g>
+            <g class="edge data" data-from="scores" data-to="m2"><path class="ln" d="M1022 160 L1078 160" marker-end="url(#arr)"></path><text class="elabel" x="1024" y="152">consulta bloque</text></g>
+            <g class="edge data" data-from="gaps" data-to="m3"><path class="ln" d="M1022 415 L1050 415 L1050 258 L1078 258" marker-end="url(#arr)"></path><text class="elabel" x="1054" y="340">activa brecha</text></g>
+            <g class="edge data" data-from="roles" data-to="m4"><path class="ln" d="M1022 520 L1064 520 L1064 322 L1078 322" marker-end="url(#arr)"></path><text class="elabel" x="1068" y="430">aplica rol</text></g>
+
+            <!-- Matriz → algoritmo -->
+            <g class="edge data" data-from="m2" data-to="algo"><path class="ln" d="M1330 178 L1360 178 L1360 600 L1080 600" marker-end="url(#arr)"></path><text class="elabel" x="1366" y="392">todos los bloques</text></g>
+            <g class="edge data" data-from="gaps" data-to="algo"><path class="ln" d="M1022 440 L1040 440 L1040 620 L1078 620" marker-end="url(#arr)"></path><text class="elabel" x="1044" y="560">bloques de brecha</text></g>
+            <g class="edge flow" data-from="algo" data-to="gen"><path class="ln" d="M1330 638 L1330 718" marker-end="url(#arr)"></path><text class="elabel" x="1336" y="688">top 5 bloques</text></g>
+
+            <!-- Generación → guía -->
+            <g class="edge data" data-from="gen" data-to="g1"><path class="ln" d="M1080 815 L760 1010 L648 1010" marker-end="url(#arr)"></path><text class="elabel" x="876" y="930">renderiza</text></g>
+
+            <!-- Fase 2 → guía + facilitador -->
+            <g class="edge flow" data-from="p7" data-to="g0"><path class="ln" d="M485 662 L485 770" marker-end="url(#arr)"></path><text class="elabel" x="492" y="725">accede con código</text></g>
+            <g class="edge data" data-from="p7" data-to="facil"><path class="ln" d="M600 608 L680 650" marker-end="url(#arr)"></path><text class="elabel" x="606" y="636">agrega respuestas</text></g>
+
+            <!-- Subflujo guía -->
+            <g class="edge flow" data-from="g0" data-to="dValid"><line class="ln" x1="520" y1="838" x2="520" y2="862" marker-end="url(#arr)"></line></g>
+            <g class="edge flow" data-from="dValid" data-to="g1"><path class="ln" d="M520 976 L520 1000" marker-end="url(#arr)"></path><text class="elabel yes" x="528" y="992">SÍ</text></g>
+            <g class="edge data" data-from="dValid" data-to="invalid"><path class="ln" d="M576 920 L660 920" marker-end="url(#arr)"></path><text class="elabel no" x="598" y="912">NO</text></g>
+            <g class="edge data" data-from="invalid" data-to="g0"><path class="ln" d="M735 898 L735 812 L644 812" marker-end="url(#arr)"></path><text class="elabel" x="690" y="806">reintentar</text></g>
+            <g class="edge flow" data-from="g1" data-to="dWhats"><line class="ln" x1="520" y1="1090" x2="520" y2="1117" marker-end="url(#arr)"></line></g>
+            <g class="edge flow" data-from="dWhats" data-to="whatsapp"><line class="ln" x1="520" y1="1221" x2="520" y2="1268" marker-end="url(#arr)"></line><text class="elabel yes" x="528" y="1250">SÍ</text></g>
+            <g class="edge data" data-from="dWhats" data-to="finuser"><path class="ln" d="M464 1165 L302 1165 L302 1172" marker-end="url(#arr)"></path><text class="elabel no" x="372" y="1158">NO</text></g>
+          </svg>
+
+          <div class="canvas-title" style="top:1370px">SAGEST · Fase 1 + Fase 2 + Matriz (111 bloques) + Guía</div>
+
+        
+<div style="position:absolute;left:1090px;top:1010px;width:490px;background:#FAF7F0;border:1px solid #DCD6C8;border-radius:7px;padding:16px 18px;box-shadow:0 1px 2px rgba(40,35,28,.05),0 8px 24px -16px rgba(40,35,28,.25)">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#8C8576;margin-bottom:11px">Leyenda</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px 20px;font-size:13px;color:#5B554B;font-family:'IBM Plex Sans',sans-serif">
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#EBF0F6;border:1px solid #3D6CA6"></span>Pantalla / vista</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#E9F1EB;border:1px solid #3E795B"></span>Decisión del usuario</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#F4EDDD;border:1px solid #9C7327"></span>Proceso del sistema</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#EEEAF5;border:1px solid #6A57A4"></span>Matriz de recomendaciones</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#F4EADE;border:1px solid #AC6730"></span>Modulación por rol</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#EBECF5;border:1px solid #4C56A2"></span>Guía personalizada</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#F3E9EF;border:1px solid #A2557F"></span>Panel facilitador</div>
+    <div style="display:flex;align-items:center;gap:9px"><span style="width:13px;height:13px;border-radius:3px;background:#F3E7E4;border:1px solid #A4483F"></span>Detección de brechas</div>
+  </div>
+</div></div>
+</div>
+</body>
+</html>
