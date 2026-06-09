@@ -15,6 +15,14 @@
     {
       "source": "/arquitectura",
       "destination": "/anexo-tecnico/anexo6/Arquitectura y flujo.html"
+    },
+    {
+      "source": "/sagest.css",
+      "destination": "/anexo-tecnico/anexo6/sagest.css"
+    },
+    {
+      "source": "/sagest.js",
+      "destination": "/anexo-tecnico/anexo6/sagest.js"
     }
   ]
 }
