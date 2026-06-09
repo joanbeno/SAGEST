@@ -1,2 +1,6 @@
 uploads/
 *.py
+.vercel
+.claude/
+*.pdf
+

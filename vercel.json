@@ -1,0 +1,20 @@
+{
+  "redirects": [
+    {
+      "source": "/flujo del sistema/:path*",
+      "destination": "/anexo-tecnico/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/flujo%20del%20sistema/:path*",
+      "destination": "/anexo-tecnico/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/arquitectura",
+      "destination": "/anexo-tecnico/anexo6/Arquitectura y flujo.html"
+    }
+  ]
+}

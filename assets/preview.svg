@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 260" width="1200" height="260">
+  <defs>
+    <linearGradient id="pbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="100%" style="stop-color:#121F3D"/>
+    </linearGradient>
+    <linearGradient id="pline" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1E72E4;stop-opacity:0.7"/>
+      <stop offset="50%" style="stop-color:#3d8ff0;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:#D4873A;stop-opacity:0.7"/>
+    </linearGradient>
+    <linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E72E4;stop-opacity:0.22"/>
+      <stop offset="100%" style="stop-color:#1E72E4;stop-opacity:0.06"/>
+    </linearGradient>
+    <linearGradient id="c2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E72E4;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#1E72E4;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="c3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d8ff0;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#D4873A;stop-opacity:0.08"/>
+    </linearGradient>
+    <linearGradient id="c4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4873A;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#D4873A;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="c5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4873A;stop-opacity:0.22"/>
+      <stop offset="100%" style="stop-color:#D4873A;stop-opacity:0.06"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="260" fill="url(#pbg)" rx="0"/>
+
+  <!-- Dot grid -->
+  <pattern id="pdots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="0.8" fill="#ffffff" opacity="0.035"/>
+  </pattern>
+  <rect width="1200" height="260" fill="url(#pdots)"/>
+
+  <!-- Section label -->
+  <text x="600" y="38" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="600" fill="#3d6aa0" letter-spacing="0.12em">FLUJO DEL DIAGNÓSTICO</text>
+
+  <!-- Connecting line -->
+  <rect x="100" y="108" width="1000" height="2" fill="url(#pline)" rx="1"/>
+
+  <!-- ── Step 1 ── -->
+  <rect x="52" y="74" width="96" height="72" rx="14" fill="url(#c1)"/>
+  <rect x="52" y="74" width="96" height="72" rx="14" fill="none" stroke="#1E72E4" stroke-width="1.2" opacity="0.5"/>
+  <!-- Icon: list lines -->
+  <rect x="88" y="90" width="24" height="3" rx="1.5" fill="#1E72E4" opacity="0.8"/>
+  <rect x="88" y="97" width="18" height="3" rx="1.5" fill="#1E72E4" opacity="0.55"/>
+  <rect x="88" y="104" width="21" height="3" rx="1.5" fill="#1E72E4" opacity="0.55"/>
+  <rect x="88" y="111" width="16" height="3" rx="1.5" fill="#1E72E4" opacity="0.4"/>
+  <!-- step number -->
+  <circle cx="68" cy="84" r="9" fill="#1E72E4" opacity="0.9"/>
+  <text x="68" y="88" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#fff">1</text>
+  <!-- Label -->
+  <text x="100" y="164" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#d0e0f5">Módulo 1</text>
+  <text x="100" y="180" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#4a6a9a">13 preguntas Likert</text>
+
+  <!-- ── Step 2 ── -->
+  <rect x="252" y="74" width="96" height="72" rx="14" fill="url(#c2)"/>
+  <rect x="252" y="74" width="96" height="72" rx="14" fill="none" stroke="#1E72E4" stroke-width="1.2" opacity="0.4"/>
+  <!-- Icon: checkboxes -->
+  <rect x="282" y="90" width="11" height="11" rx="3" fill="none" stroke="#1E72E4" stroke-width="1.5" opacity="0.7"/>
+  <polyline points="284,96 287,99 291,93" fill="none" stroke="#1E72E4" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+  <rect x="298" y="93" width="18" height="3" rx="1.5" fill="#1E72E4" opacity="0.4"/>
+  <rect x="282" y="106" width="11" height="11" rx="3" fill="none" stroke="#1E72E4" stroke-width="1.5" opacity="0.5"/>
+  <rect x="298" y="109" width="14" height="3" rx="1.5" fill="#1E72E4" opacity="0.35"/>
+  <circle cx="268" cy="84" r="9" fill="#1E72E4" opacity="0.8"/>
+  <text x="268" y="88" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#fff">2</text>
+  <text x="300" y="164" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#d0e0f5">Módulo 2</text>
+  <text x="300" y="180" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#4a6a9a">Preguntas binarias</text>
+
+  <!-- ── Step 3 (center, larger) ── -->
+  <rect x="468" y="62" width="120" height="90" rx="16" fill="url(#c3)"/>
+  <rect x="468" y="62" width="120" height="90" rx="16" fill="none" stroke="#3d8ff0" stroke-width="1.5" opacity="0.5"/>
+  <!-- Icon: server/calculation -->
+  <rect x="516" y="80" width="24" height="18" rx="4" fill="none" stroke="#4da6ff" stroke-width="1.5" opacity="0.7"/>
+  <rect x="519" y="84" width="8" height="2" rx="1" fill="#4da6ff" opacity="0.7"/>
+  <rect x="519" y="88" width="6" height="2" rx="1" fill="#4da6ff" opacity="0.5"/>
+  <circle cx="533" cy="93" r="2" fill="#D4873A" opacity="0.8"/>
+  <text x="516" y="114" font-family="system-ui" font-size="9.5" fill="#7a9fd0" opacity="0.9">fn()</text>
+  <circle cx="484" cy="72" r="9" fill="#3d8ff0" opacity="0.85"/>
+  <text x="484" y="76" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#fff">3</text>
+  <text x="528" y="172" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#d0e0f5">Apps Script</text>
+  <text x="528" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#4a6a9a">Scoring server-side</text>
+
+  <!-- ── Step 4 ── -->
+  <rect x="756" y="74" width="96" height="72" rx="14" fill="url(#c4)"/>
+  <rect x="756" y="74" width="96" height="72" rx="14" fill="none" stroke="#D4873A" stroke-width="1.2" opacity="0.4"/>
+  <!-- Icon: radar pentagon -->
+  <polygon points="804,84 820,97 814,115 794,115 788,97" fill="none" stroke="#D4873A" stroke-width="1.2" opacity="0.45"/>
+  <polygon points="804,89 815,99 811,112 797,112 793,99" fill="#D4873A" opacity="0.12"/>
+  <circle cx="804" cy="100" r="1.5" fill="#D4873A" opacity="0.6"/>
+  <circle cx="772" cy="84" r="9" fill="#D4873A" opacity="0.8"/>
+  <text x="772" y="88" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#fff">4</text>
+  <text x="804" y="164" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#d0e0f5">Radar 5D</text>
+  <text x="804" y="180" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#7a6040">Resultados + alertas</text>
+
+  <!-- ── Step 5 ── -->
+  <rect x="1052" y="74" width="96" height="72" rx="14" fill="url(#c5)"/>
+  <rect x="1052" y="74" width="96" height="72" rx="14" fill="none" stroke="#D4873A" stroke-width="1.2" opacity="0.5"/>
+  <!-- Icon: key + person -->
+  <circle cx="1100" cy="92" r="8" fill="none" stroke="#D4873A" stroke-width="1.5" opacity="0.7"/>
+  <rect x="1096" y="100" width="8" height="10" rx="1" fill="none" stroke="#D4873A" stroke-width="1.5" opacity="0.7"/>
+  <rect x="1098" y="104" width="4" height="2" rx="1" fill="#D4873A" opacity="0.6"/>
+  <circle cx="1068" cy="84" r="9" fill="#D4873A" opacity="0.9"/>
+  <text x="1068" y="88" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="700" fill="#fff">5</text>
+  <text x="1100" y="164" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#d0e0f5">Guía interactiva</text>
+  <text x="1100" y="180" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#7a6040">Código de acceso</text>
+
+  <!-- Bottom label -->
+  <text x="600" y="228" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#2a4a6a" letter-spacing="0.06em">FIXORIA · fixoria.com.co</text>
+</svg>
