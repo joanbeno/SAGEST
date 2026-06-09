@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="100%" style="stop-color:#121F3D"/>
+    </linearGradient>
+    <linearGradient id="accent-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1E72E4"/>
+      <stop offset="55%" style="stop-color:#D4873A"/>
+      <stop offset="100%" style="stop-color:#D4873A;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="340" fill="url(#bg)"/>
+
+  <!-- Dot pattern -->
+  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#ffffff" opacity="0.04"/>
+  </pattern>
+  <rect width="1200" height="340" fill="url(#dots)"/>
+
+  <!-- Accent line top -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#accent-line)"/>
+
+  <!-- Decorative rings -->
+  <circle cx="1060" cy="170" r="100" fill="none" stroke="#1E72E4" stroke-width="1" opacity="0.15"/>
+  <circle cx="1060" cy="170" r="68" fill="none" stroke="#1E72E4" stroke-width="1" opacity="0.1"/>
+  <circle cx="1060" cy="170" r="38" fill="none" stroke="#D4873A" stroke-width="1" opacity="0.25"/>
+  <!-- 5 dimension markers on outer ring -->
+  <circle cx="1060" cy="70" r="4" fill="#1E72E4" opacity="0.5"/>
+  <circle cx="1150" cy="138" r="4" fill="#1E72E4" opacity="0.5"/>
+  <circle cx="1117" cy="255" r="4" fill="#D4873A" opacity="0.5"/>
+  <circle cx="1003" cy="255" r="4" fill="#D4873A" opacity="0.5"/>
+  <circle cx="970" cy="138" r="4" fill="#1E72E4" opacity="0.5"/>
+
+  <!-- Main title -->
+  <text x="80" y="118" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="52" font-weight="700" fill="#f0f4fc" letter-spacing="-0.02em">SAGEST</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="164" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="400" fill="#8aa4d0" letter-spacing="0">Sistema de Aprendizaje y Gestión del Conocimiento</text>
+
+  <!-- Divider -->
+  <rect x="80" y="192" width="520" height="2" fill="#1E72E4" opacity="0.5"/>
+
+  <!-- Tagline -->
+  <text x="80" y="230" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#5a7ab0">Diagnóstico organizacional en 5 dimensiones.</text>
+  <text x="80" y="254" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#5a7ab0">Detecta brechas. Activa el conocimiento del equipo.</text>
+
+  <!-- URL badge -->
+  <rect x="80" y="282" width="240" height="34" rx="6" fill="#1E72E4" opacity="0.12"/>
+  <rect x="80" y="282" width="240" height="34" rx="6" fill="none" stroke="#1E72E4" stroke-width="1" opacity="0.35"/>
+  <text x="200" y="304" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#6eaaff" text-anchor="middle">sagest.vercel.app</text>
+
+  <!-- Center decorative label -->
+  <text x="1060" y="165" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#1E72E4" opacity="0.5" text-anchor="middle" letter-spacing="0.08em">5</text>
+  <text x="1060" y="182" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#5a7ab0" text-anchor="middle" letter-spacing="0.05em">DIMENSIONES</text>
+</svg>
